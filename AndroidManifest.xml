@@ -22,6 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="gxu.software_engineering.market.android.activity.ItemsActivity" />
+        <activity android:name="gxu.software_engineering.market.android.activity.ItemActivity" />
     </application>
 
 </manifest>

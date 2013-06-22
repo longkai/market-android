@@ -20,47 +20,52 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package gxu.software_engineering.market.android.ui;
+package gxu.software_engineering.market.android.activity;
 
-import gxu.software_engineering.market.android.util.C;
+import gxu.software_engineering.market.android.ui.ItemsFragment;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 /**
- * 主界面pager适配器。
+ * 查看某个类别下的物品列表活动。
+ * 这里，有点问题，按理来说应该在用户点击某个类别后直接在pager中改变，但是。。。你懂的
  * 
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
  * @since  2013-6-22
  */
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class ItemsActivity extends SherlockFragmentActivity {
 
-	private Fragment[] fragments;
-	
-	public PagerAdapter(FragmentManager fm) {
-		super(fm);
-		fragments = new Fragment[C.PAGER_SIZE];
-		Fragment fragment = null;
-		for (int i = 0; i < C.PAGER_SIZE; i++) {
-			fragment = new ItemsFragment();
-			fragments[i] = fragment;
+	@Override
+	protected void onCreate(Bundle arg0) {
+		super.onCreate(arg0);
+		setContentView(cn.longkai.android.R.layout.fragment_container);
+		FragmentManager fm = getSupportFragmentManager();
+		if (fm.findFragmentByTag("items") == null) {
+			Fragment fragment = new ItemsFragment();
+			fm.beginTransaction()
+				.replace(cn.longkai.android.R.id.fragment_container, fragment, "items")
+				.commit();
 		}
+		
+		getSupportActionBar().setTitle("查看类别列表！");
 	}
 
 	@Override
-	public Fragment getItem(int arg0) {
-		return fragments[arg0];
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
-	public int getCount() {
-		return C.PAGER_SIZE;
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		return super.onOptionsItemSelected(item);
 	}
-
-	@Override
-	public CharSequence getPageTitle(int position) {
-		return C.PAGER_TITLES[position];
-	}
-
+	
 }

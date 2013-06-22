@@ -22,45 +22,40 @@
  */
 package gxu.software_engineering.market.android.ui;
 
-import gxu.software_engineering.market.android.util.C;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
- * 主界面pager适配器。
+ * 物品信息界面片段。
  * 
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
  * @since  2013-6-22
  */
-public class PagerAdapter extends FragmentStatePagerAdapter {
-
-	private Fragment[] fragments;
+public class ItemFragment extends ListFragment {
 	
-	public PagerAdapter(FragmentManager fm) {
-		super(fm);
-		fragments = new Fragment[C.PAGER_SIZE];
-		Fragment fragment = null;
-		for (int i = 0; i < C.PAGER_SIZE; i++) {
-			fragment = new ItemsFragment();
-			fragments[i] = fragment;
-		}
-	}
+	private static final String[] names = {"姓名", "性别", "年龄"};
+	private static final String[] values = {"龙凯", "男", "21"};
+	
 
+	private ItemAdapter mAdapter;
+	
+	
 	@Override
-	public Fragment getItem(int arg0) {
-		return fragments[arg0];
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		mAdapter = new ItemAdapter(getActivity(), names, values);
+		setRetainInstance(true);
 	}
-
+	
 	@Override
-	public int getCount() {
-		return C.PAGER_SIZE;
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		setListAdapter(mAdapter);
 	}
-
-	@Override
-	public CharSequence getPageTitle(int position) {
-		return C.PAGER_TITLES[position];
-	}
-
+	
 }

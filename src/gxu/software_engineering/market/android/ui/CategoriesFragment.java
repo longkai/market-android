@@ -22,9 +22,13 @@
  */
 package gxu.software_engineering.market.android.ui;
 
+import gxu.software_engineering.market.android.activity.ItemsActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 /**
  * 类别列表侧边栏。
@@ -52,4 +56,10 @@ public class CategoriesFragment extends ListFragment {
 		setListAdapter(adapter);
 	}
 
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		Intent intent = new Intent(getActivity(), ItemsActivity.class);
+		getActivity().startActivity(intent);
+	}
+	
 }
