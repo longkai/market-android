@@ -25,6 +25,7 @@ package gxu.software_engineering.market.android;
 import gxu.software_engineering.market.android.ui.CategoriesFragment;
 import gxu.software_engineering.market.android.ui.LoginBoxFragment;
 import gxu.software_engineering.market.android.ui.PagerAdapter;
+import gxu.software_engineering.market.android.ui.RegisterBoxFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -118,6 +119,10 @@ public class MainActivity extends SlidingFragmentActivity {
 		case R.id.login:
 			LoginBoxFragment fragment = new LoginBoxFragment();
 			fragment.show(getSupportFragmentManager(), "login");
+			break;
+		case R.id.register:
+			RegisterBoxFragment register = new RegisterBoxFragment();
+			register.show(getSupportFragmentManager(), "register");
 			break;
 		default:
 			break;

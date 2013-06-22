@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    
+    <EditText
+        android:id="@+id/account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/account_hint"
+        android:textSize="18sp"
+        android:maxLength="18"
+        android:inputType="text" />
+    
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password_hint"
+        android:textSize="18sp"
+        android:inputType="textPassword" />
+    
+    <EditText
+        android:id="@+id/confirmed_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/confirmed_password"
+        android:textSize="18sp"
+        android:inputType="textPassword" />
+    
+    <EditText
+        android:id="@+id/nick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/nick"
+        android:textSize="18sp"
+        android:maxLength="7"
+        android:inputType="text" />
+    
+    <EditText
+        android:id="@+id/contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/contact"
+        android:textSize="18sp"
+        android:maxLength="11"
+        android:inputType="text" />
+    
+    <EditText
+        android:id="@+id/true_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/true_name"
+        android:textSize="18sp"
+        android:maxLength="11"
+        android:inputType="text" />
+
+</LinearLayout>

@@ -1,16 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/login"
+        android:title="@string/app_name"
         android:showAsAction="always"
-        android:icon="@drawable/social_person"
-        android:title="@string/login" />
+        android:icon="@drawable/social_group">
+        <menu>
+		    <item
+		        android:id="@+id/login"
+		        android:icon="@drawable/social_person"
+		        android:title="@string/login" />
+		    <item
+		        android:id="@+id/register"
+		        android:icon="@drawable/social_add_person"
+		        android:title="@string/register" />
+        </menu>
+    </item>
     
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings" />
-    
 
 </menu>
