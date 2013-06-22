@@ -20,54 +20,51 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package gxu.software_engineering.market.android.ui;
+package gxu.software_engineering.market.android.activity;
 
-import gxu.software_engineering.market.android.util.C;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import gxu.software_engineering.market.android.R;
+import android.os.Bundle;
+import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 /**
- * 主界面pager适配器。
+ * 更新物品信息界面。
  * 
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
- * @since  2013-6-22
+ * @since  2013-6-23
  */
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class UpdateItemActivity extends SherlockFragmentActivity {
 
-	private Fragment[] fragments;
-	
-	public PagerAdapter(FragmentManager fm) {
-		super(fm);
-		fragments = new Fragment[C.PAGER_SIZE];
-		Fragment fragment = null;
-		for (int i = 0; i < C.PAGER_SIZE; i++) {
-			switch (i) {
-			case 2:
-				fragment = new UsersFragment(); 
-				break;
-			default:
-				fragment = new ItemsFragment();
-				break;
-			}
-			fragments[i] = fragment;
+	@Override
+	protected void onCreate(Bundle arg0) {
+		super.onCreate(arg0);
+		setContentView(R.layout.new_item);
+		getSupportActionBar().setTitle(R.string.edit);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.new_item, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.done:
+			Toast.makeText(this, R.string.submit, Toast.LENGTH_SHORT).show();
+			break;
+		case R.id.discard:
+			finish();
+			break;
+		default:
+			break;
 		}
-	}
-
-	@Override
-	public Fragment getItem(int arg0) {
-		return fragments[arg0];
-	}
-
-	@Override
-	public int getCount() {
-		return C.PAGER_SIZE;
-	}
-
-	@Override
-	public CharSequence getPageTitle(int position) {
-		return C.PAGER_TITLES[position];
+		return super.onOptionsItemSelected(item);
 	}
 
 }

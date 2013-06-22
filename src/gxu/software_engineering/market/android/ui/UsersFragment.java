@@ -23,51 +23,40 @@
 package gxu.software_engineering.market.android.ui;
 
 import gxu.software_engineering.market.android.util.C;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.os.Bundle;
+import android.support.v4.app.ListFragment;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 /**
- * 主界面pager适配器。
+ * 卖家列表片段。
  * 
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
- * @since  2013-6-22
+ * @since  2013-6-23
  */
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class UsersFragment extends ListFragment {
 
-	private Fragment[] fragments;
+	private ArrayAdapter<String> mAdapter;
 	
-	public PagerAdapter(FragmentManager fm) {
-		super(fm);
-		fragments = new Fragment[C.PAGER_SIZE];
-		Fragment fragment = null;
-		for (int i = 0; i < C.PAGER_SIZE; i++) {
-			switch (i) {
-			case 2:
-				fragment = new UsersFragment(); 
-				break;
-			default:
-				fragment = new ItemsFragment();
-				break;
-			}
-			fragments[i] = fragment;
-		}
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		mAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, C.USER_SERVICE_PAGER_TTILES);
+		setRetainInstance(true);
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		setListAdapter(mAdapter);
 	}
 
 	@Override
-	public Fragment getItem(int arg0) {
-		return fragments[arg0];
-	}
-
-	@Override
-	public int getCount() {
-		return C.PAGER_SIZE;
-	}
-
-	@Override
-	public CharSequence getPageTitle(int position) {
-		return C.PAGER_TITLES[position];
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		UserInfoBoxFragment fragment = new UserInfoBoxFragment();
+		fragment.show(getFragmentManager(), "user_info");
 	}
 
 }

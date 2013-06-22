@@ -20,61 +20,46 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package gxu.software_engineering.market.android.activity;
+package gxu.software_engineering.market.android.ui;
 
 import gxu.software_engineering.market.android.R;
-import gxu.software_engineering.market.android.ui.ItemFragment;
+import gxu.software_engineering.market.android.activity.ItemsActivity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import android.support.v4.app.DialogFragment;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 /**
- * 查看物品信息界面。
+ * 用户信息界面片段。
  * 
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
- * @since  2013-6-22
+ * @since  2013-6-23
  */
-public class ItemActivity extends SherlockFragmentActivity {
+public class UserInfoBoxFragment extends DialogFragment {
 
-	@Override
-	protected void onCreate(Bundle arg0) {
-		super.onCreate(arg0);
-		setContentView(cn.longkai.android.R.layout.fragment_container);
-		
-		FragmentManager fm = getSupportFragmentManager();
-		if (fm.findFragmentByTag("item") == null) {
-			Fragment fragment = new ItemFragment();
-			fm.beginTransaction()
-				.replace(cn.longkai.android.R.id.fragment_container, fragment, "item")
-				.commit();
-		}
-		getSupportActionBar().setTitle("查看物品信息");
-	}
+	public static final String[] NAMES = {"姓名", "年龄", "联系方式"};
 	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.item_edit, menu);
-		return true;
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, NAMES), null);
+		builder.setTitle("xx用户").setIcon(R.drawable.social_person)
+			.setNegativeButton(R.string.close, null).setIcon(R.drawable.ic_launcher)
+			.setPositiveButton(R.string.items_by_seller, new OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Intent intent = new Intent(getActivity(), ItemsActivity.class);
+					getActivity().startActivity(intent);
+				}
+			});
+		return builder.create();
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.edit:
-			Intent intent = new Intent(this, UpdateItemActivity.class);
-			startActivity(intent);
-			break;
-
-		default:
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
 }

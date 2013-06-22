@@ -50,6 +50,7 @@ public class UserServiceActivity extends SherlockFragmentActivity {
 		FragmentManager fm = getSupportFragmentManager();
 		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(new UserServicePagerAdapter(fm));
+		pager.setCurrentItem(1);
 	}
 	
 	@Override

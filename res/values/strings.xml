@@ -20,11 +20,16 @@
     <string name="submit">确认提交</string>
     <string name="cancle">放弃编辑</string>
     
+    <string name="edit">修改物品信息</string>
+    
     <string-array name="arrays">
         <item>类别1</item>
         <item>类别2</item>
         <item>类别3</item>
         <item>类别4</item>
     </string-array>
+    
+    <string name="close">关闭</string>
+    <string name="items_by_seller">查看他出售的物品</string>
 
 </resources>
