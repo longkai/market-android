@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="success">#468847</color>
+    <color name="info">#2f96b4</color>
+    <color name="warnning">#c09853</color>
+    <color name="error">#b94a48</color>
+    <color name="white">#fff</color>
+    <color name="pager_title_background">#FF96AA39</color>
+</resources>
