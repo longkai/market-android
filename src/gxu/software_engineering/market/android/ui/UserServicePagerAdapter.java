@@ -20,21 +20,49 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package gxu.software_engineering.market.android.util;
+package gxu.software_engineering.market.android.ui;
+
+import gxu.software_engineering.market.android.util.C;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 /**
- * 常量池。
+ * 用户自服务pager。
  * 
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
  * @since  2013-6-22
  */
-public final class C {
-	
-	public static final int PAGER_SIZE = 3;
-	
-	public static final String[] PAGER_TITLES = {"热门物品", "最新物品", "卖家列表"};
-	
-	public static final String[] USER_SERVICE_PAGER_TTILES = {"已关闭物品", "代售物品", "成功交易"};
+public class UserServicePagerAdapter extends FragmentStatePagerAdapter {
 
+	private Fragment[] fragments;
+	
+	public UserServicePagerAdapter(FragmentManager fm) {
+		super(fm);
+		fragments = new Fragment[C.PAGER_SIZE];
+		Fragment fragment = null;
+		for (int i = 0; i < C.PAGER_SIZE; i++) {
+			fragment = new ItemsFragment();
+			fragments[i] = fragment;
+		}
+	}
+
+	
+	@Override
+	public Fragment getItem(int arg0) {
+		return fragments[arg0];
+	}
+
+	@Override
+	public int getCount() {
+		return C.PAGER_SIZE;
+	}
+
+
+	@Override
+	public CharSequence getPageTitle(int position) {
+		return C.USER_SERVICE_PAGER_TTILES[position];
+	}
+	
 }

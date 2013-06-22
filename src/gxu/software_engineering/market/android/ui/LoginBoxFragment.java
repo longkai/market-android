@@ -23,8 +23,12 @@
 package gxu.software_engineering.market.android.ui;
 
 import gxu.software_engineering.market.android.R;
+import gxu.software_engineering.market.android.activity.UserServiceActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
@@ -46,7 +50,13 @@ public class LoginBoxFragment extends DialogFragment {
 			.setTitle(R.string.login)
 			.setView(loginForm)
 			.setNegativeButton(R.string.no, null)
-			.setPositiveButton(R.string.ok, null)
+			.setPositiveButton(R.string.ok, new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Intent intent = new Intent(getActivity(), UserServiceActivity.class);
+					getActivity().startActivity(intent);
+				}
+			})
 			.create();
 	}
 	

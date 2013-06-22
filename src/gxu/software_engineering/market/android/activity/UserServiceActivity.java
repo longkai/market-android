@@ -20,21 +20,45 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package gxu.software_engineering.market.android.util;
+package gxu.software_engineering.market.android.activity;
+
+import gxu.software_engineering.market.android.R;
+import gxu.software_engineering.market.android.ui.UserServicePagerAdapter;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 /**
- * 常量池。
+ * 用户服务界面。
  * 
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
  * @since  2013-6-22
  */
-public final class C {
+public class UserServiceActivity extends SherlockFragmentActivity {
+
+	@Override
+	protected void onCreate(Bundle arg0) {
+		super.onCreate(arg0);
+		setContentView(R.layout.activity_main);
+		
+		FragmentManager fm = getSupportFragmentManager();
+		ViewPager pager = (ViewPager) findViewById(R.id.pager);
+		pager.setAdapter(new UserServicePagerAdapter(fm));
+	}
 	
-	public static final int PAGER_SIZE = 3;
-	
-	public static final String[] PAGER_TITLES = {"热门物品", "最新物品", "卖家列表"};
-	
-	public static final String[] USER_SERVICE_PAGER_TTILES = {"已关闭物品", "代售物品", "成功交易"};
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return super.onOptionsItemSelected(item);
+	}
 
 }

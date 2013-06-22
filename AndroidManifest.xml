@@ -24,6 +24,7 @@
         </activity>
         <activity android:name="gxu.software_engineering.market.android.activity.ItemsActivity" />
         <activity android:name="gxu.software_engineering.market.android.activity.ItemActivity" />
+        <activity android:name="gxu.software_engineering.market.android.activity.UserServiceActivity" />
     </application>
 
 </manifest>
