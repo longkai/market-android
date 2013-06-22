@@ -23,6 +23,7 @@
 package gxu.software_engineering.market.android;
 
 import gxu.software_engineering.market.android.ui.CategoriesFragment;
+import gxu.software_engineering.market.android.ui.LoginBoxFragment;
 import gxu.software_engineering.market.android.ui.PagerAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -114,7 +115,10 @@ public class MainActivity extends SlidingFragmentActivity {
 		case android.R.id.home:
 			toggle();
 			break;
-
+		case R.id.login:
+			LoginBoxFragment fragment = new LoginBoxFragment();
+			fragment.show(getSupportFragmentManager(), "login");
+			break;
 		default:
 			break;
 		}
