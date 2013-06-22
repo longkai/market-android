@@ -23,9 +23,12 @@
 package gxu.software_engineering.market.android.activity;
 
 import gxu.software_engineering.market.android.R;
+import gxu.software_engineering.market.android.ui.EditUserInfoBoxFragment;
 import gxu.software_engineering.market.android.ui.UserServicePagerAdapter;
+import gxu.software_engineering.market.android.util.C;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 
@@ -66,7 +69,20 @@ public class UserServiceActivity extends SherlockFragmentActivity {
 			Intent intent = new Intent(this, NewItemActivity.class);
 			startActivity(intent);
 			break;
-
+		case R.id.edit_ccontact:
+			EditUserInfoBoxFragment contact = new EditUserInfoBoxFragment();
+			Bundle contactArgs = new Bundle();
+			contactArgs.putInt(C.USER_INFO_MODIFY_TYPE, C.CONTACT);
+			contact.setArguments(contactArgs);
+			contact.show(getSupportFragmentManager(), "contact");
+			break;
+		case R.id.edit_password:
+			EditUserInfoBoxFragment pwd = new EditUserInfoBoxFragment();
+			Bundle pwdArgs = new Bundle();
+			pwdArgs.putInt(C.USER_INFO_MODIFY_TYPE, C.PASSWORD);
+			pwd.setArguments(pwdArgs);
+			pwd.show(getSupportFragmentManager(), "password");
+			break;
 		default:
 			break;
 		}
