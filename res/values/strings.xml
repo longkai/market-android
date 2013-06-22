@@ -10,5 +10,21 @@
     <string name="password_hint">密码</string>
     <string name="ok">确定</string>
     <string name="no">取消</string>
+    
+    <string name="new_item">新建交易物品</string>
+    <string name="title">物品名称</string>
+    <string name="description">物品描述</string>
+    <string name="extra">附加说明（可选）</string>
+    <string name="category">类别</string>
+    <string name="price">价格</string>
+    <string name="submit">确认提交</string>
+    <string name="cancle">放弃编辑</string>
+    
+    <string-array name="arrays">
+        <item>类别1</item>
+        <item>类别2</item>
+        <item>类别3</item>
+        <item>类别4</item>
+    </string-array>
 
 </resources>

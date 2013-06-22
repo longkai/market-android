@@ -25,6 +25,8 @@
         <activity android:name="gxu.software_engineering.market.android.activity.ItemsActivity" />
         <activity android:name="gxu.software_engineering.market.android.activity.ItemActivity" />
         <activity android:name="gxu.software_engineering.market.android.activity.UserServiceActivity" />
+        <activity android:name="gxu.software_engineering.market.android.activity.NewItemActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

@@ -23,53 +23,57 @@
 package gxu.software_engineering.market.android.activity;
 
 import gxu.software_engineering.market.android.R;
-import gxu.software_engineering.market.android.ui.UserServicePagerAdapter;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
 
 /**
- * 用户服务界面。
+ * 新建物品界面。
  * 
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
  * @since  2013-6-22
  */
-public class UserServiceActivity extends SherlockFragmentActivity {
+public class NewItemActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.new_item);
+//		Spinner spinner = (Spinner) findViewById(R.id.categories);
 		
-		FragmentManager fm = getSupportFragmentManager();
-		ViewPager pager = (ViewPager) findViewById(R.id.pager);
-		pager.setAdapter(new UserServicePagerAdapter(fm));
+		getSupportActionBar().setTitle(R.string.new_item);
+//		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.user_service, menu);
+		getSupportMenuInflater().inflate(R.menu.new_item, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.new_item:
-			Intent intent = new Intent(this, NewItemActivity.class);
-			startActivity(intent);
+		case android.R.id.home:
+			finish();
 			break;
-
+		case R.id.discard:
+			finish();
+			break;
+		case R.id.done:
+			Toast.makeText(this, R.string.submit, Toast.LENGTH_SHORT).show();
+			break;
 		default:
 			break;
 		}
 		return false;
 	}
+	
 
 }
