@@ -61,7 +61,9 @@ public class ItemsActivity extends SherlockFragmentActivity {
 		case ServiceHelper.USER_ITEMS:
 			title = getIntent().getStringExtra(C.user.NICK) + " 出售的物品";
 			break;
-
+		case ServiceHelper.CATEGORY_ITEMS:
+			title = getIntent().getStringExtra(C.category.NAME);
+			break;
 		default:
 			title = "物品列表";
 			break;

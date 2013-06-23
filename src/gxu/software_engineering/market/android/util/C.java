@@ -79,6 +79,7 @@ public final class C {
 	public static final String DEAL = "deal";
 	public static final String LAST_ID = "last_id";
 	public static final String COUNT = "count";
+	public static final String CID = "cid";
 	
 	public static final int DEFAULT_LIST_SIZE = 50;
 	
@@ -103,6 +104,9 @@ public final class C {
 		public static final String LAST_LOGIN_TIME = "last_login_time";
 		public static final String LOGIN_TIMES = "login_times";
 		public static final String REAL_NAME = "real_name";
+		
+//		not json!
+		public static final String PASSWORD = "passowrd";
 	}
 	
 	public static final class item {

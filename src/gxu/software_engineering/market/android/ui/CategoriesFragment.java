@@ -36,6 +36,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -67,6 +68,10 @@ public class CategoriesFragment extends ListFragment implements LoaderCallbacks<
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		Intent intent = new Intent(getActivity(), ItemsActivity.class);
+		intent.putExtra(C.CID, id);
+		intent.putExtra(C.ITEMS_TYPE, ServiceHelper.CATEGORY_ITEMS);
+		Cursor c = mAdapter.getCursor();
+		intent.putExtra(C.category.NAME, c.getString(c.getColumnIndex(C.category.NAME)));
 		getActivity().startActivity(intent);
 	}
 

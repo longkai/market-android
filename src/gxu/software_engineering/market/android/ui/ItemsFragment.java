@@ -82,6 +82,9 @@ public class ItemsFragment extends ListFragment implements LoaderCallbacks<Curso
 		case ServiceHelper.USER_ITEMS:
 			intent.putExtra(C.UID, getArguments().getLong(C.UID));
 			break;
+		case ServiceHelper.CATEGORY_ITEMS:
+			intent.putExtra(C.CID, getArguments().getLong(C.CID));
+			break;
 		}
 		
 		Uri uri = Uri.parse(C.BASE_URI + C.ITEMS);
@@ -98,6 +101,9 @@ public class ItemsFragment extends ListFragment implements LoaderCallbacks<Curso
 			break;
 		case ServiceHelper.USER_ITEMS:
 			selection = C.item.SELLER_ID + " = " + getArguments().getLong(C.UID);
+			break;
+		case ServiceHelper.CATEGORY_ITEMS:
+			selection = C.item.CLOSED + " = 'false' and " + C.item.DEAL + " = 'false' and " + C.CATEGORY + " = '" + getArguments().getString(C.category.NAME) + "'";
 			break;
 		default:
 			selection = C.item.CLOSED + " = 'false' and " + C.item.DEAL + " = 'false'";

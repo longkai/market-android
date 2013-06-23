@@ -22,10 +22,12 @@
  */
 package gxu.software_engineering.market.android;
 
+import gxu.software_engineering.market.android.activity.UserServiceActivity;
 import gxu.software_engineering.market.android.ui.CategoriesFragment;
 import gxu.software_engineering.market.android.ui.LoginBoxFragment;
 import gxu.software_engineering.market.android.ui.PagerAdapter;
 import gxu.software_engineering.market.android.ui.RegisterBoxFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -117,8 +119,14 @@ public class MainActivity extends SlidingFragmentActivity {
 			toggle();
 			break;
 		case R.id.login:
-			LoginBoxFragment fragment = new LoginBoxFragment();
-			fragment.show(getSupportFragmentManager(), "login");
+			MarketApp app = MarketApp.marketApp();
+			if (app.hasLogedIn()) {
+				Intent intent = new Intent(this, UserServiceActivity.class);
+				startActivity(intent);
+			} else {
+				LoginBoxFragment fragment = new LoginBoxFragment();
+				fragment.show(getSupportFragmentManager(), "login");
+			}
 			break;
 		case R.id.register:
 			RegisterBoxFragment register = new RegisterBoxFragment();

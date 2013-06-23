@@ -22,9 +22,11 @@
  */
 package gxu.software_engineering.market.android;
 
+import gxu.software_engineering.market.android.util.C;
 import cn.longkai.android.util.HttpClientProvider;
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -64,5 +66,17 @@ public class MarketApp extends Application implements OnSharedPreferenceChangeLi
 	public SharedPreferences getPrefs() {
 		return mPrefs;
 	}
-
+	
+	public boolean hasLogedIn() {
+		return this.mPrefs.getLong(C.UID, -1) == -1 ? false : true;
+	}
+	
+	public void setLoginInfo(Long uid, String account, String password) {
+		Editor edit = this.mPrefs.edit();
+		edit.putString(C.user.ACCOUNT, account);
+		edit.putString(C.user.PASSWORD, password);
+		edit.putLong(C.UID, uid);
+		edit.commit();
+	}
+	
 }
