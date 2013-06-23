@@ -84,14 +84,16 @@ public class ItemsFragment extends ListFragment implements LoaderCallbacks<Curso
 		String selection = null;
 		switch (type) {
 		case ServiceHelper.HOTTEST_ITEMS:
+			selection = C.item.CLOSED + " = 'false' and " + C.item.DEAL + " = 'false'";
 			orderBy = C.item.HOTTEST_ORDER;
 			break;
 		case ServiceHelper.USER_ITEMS:
 			selection = C.item.SELLER_ID + " = " + getArguments().getLong(C.UID);
 			break;
 		default:
-			selection = C.item.CLOSED + " = null or " + C.item.CLOSED + " is false";
-			orderBy = C.item.LATEST_ORDER;
+			selection = C.item.CLOSED + " = 'false' and " + C.item.DEAL + " = 'false'";
+//			由于xx脑残收集 的数据比较蛋疼，id大的有些反而添加时间比较前，so。。。
+//			orderBy = C.item.LATEST_ORDER;
 			break;
 		}
 		return new CursorLoader(getActivity(), uri, null, selection, null, orderBy);
