@@ -24,13 +24,17 @@ package gxu.software_engineering.market.android.ui;
 
 import gxu.software_engineering.market.android.R;
 import gxu.software_engineering.market.android.activity.ItemsActivity;
+import gxu.software_engineering.market.android.util.C;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.format.DateUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -43,13 +47,26 @@ import android.widget.Toast;
  */
 public class UserInfoBoxFragment extends DialogFragment {
 
-	public static final String[] NAMES = {"姓名", "年龄", "联系方式"};
+	public static final String[] NAMES = {"真实姓名：", "联系方式：", "加入时间："};
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, NAMES), null);
-		builder.setTitle("xx用户").setIcon(R.drawable.social_person)
+		long id = getArguments().getLong(C.ID);
+		Cursor c = getActivity().getContentResolver().query(Uri.parse(C.BASE_URI + C.USERS + "/" + id), null, null, null, null);
+		
+		if (!c.moveToNext()) {
+			throw new RuntimeException("sorry, not found this person!");
+		}
+		
+		long mills = c.getLong(c.getColumnIndex(C.user.REGISTER_TIME));
+		String[] infos = new String[NAMES.length];
+		infos[0] = c.getString(c.getColumnIndex(C.user.REAL_NAME));
+		infos[1] = c.getString(c.getColumnIndex(C.user.CONTACT));
+		infos[2] = DateUtils.getRelativeTimeSpanString(mills).toString();
+		
+		builder.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, infos), null);
+		builder.setTitle(c.getString(c.getColumnIndex(C.user.NICK))).setIcon(R.drawable.social_person)
 			.setNegativeButton(R.string.close, null).setIcon(R.drawable.ic_launcher)
 			.setPositiveButton(R.string.items_by_seller, new OnClickListener() {
 				

@@ -65,7 +65,10 @@ public class UsersFragment extends ListFragment implements LoaderCallbacks<Curso
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
+		Bundle args = new Bundle();
+		args.putLong(C.ID, id);
 		UserInfoBoxFragment fragment = new UserInfoBoxFragment();
+		fragment.setArguments(args);
 		fragment.show(getFragmentManager(), "user_info");
 	}
 
