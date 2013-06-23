@@ -52,9 +52,23 @@ public class UserServicePagerAdapter extends FragmentStatePagerAdapter {
 		for (int i = 0; i < C.PAGER_SIZE; i++) {
 			switch (i) {
 			default:
-			case 0:
+			case 1:
 				args = new Bundle();
 				args.putInt(C.ITEMS_TYPE, ServiceHelper.USER_ITEMS);
+				args.putLong(C.UID, uid);
+				fragment = new ItemsFragment();
+				fragment.setArguments(args);
+				break;
+			case 0:
+				args = new Bundle();
+				args.putInt(C.ITEMS_TYPE, ServiceHelper.USER_CLOSED_ITEMS);
+				args.putLong(C.UID, uid);
+				fragment = new ItemsFragment();
+				fragment.setArguments(args);
+				break;
+			case 2:
+				args = new Bundle();
+				args.putInt(C.ITEMS_TYPE, ServiceHelper.USER_DEAL_ITEMS);
 				args.putLong(C.UID, uid);
 				fragment = new ItemsFragment();
 				fragment.setArguments(args);

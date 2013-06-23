@@ -47,9 +47,13 @@ public class ServiceHelper {
 	public static final int HOTTEST_ITEMS = 4;
 	public static final int USER_ITEMS = 5;
 	public static final int CATEGORY_ITEMS = 6;
+	public static final int USER_CLOSED_ITEMS = 7;
+	public static final int USER_DEAL_ITEMS = 8;
 	
 	public static void pre(Intent intent) {
 		int target = intent.getIntExtra(C.TARGET_ENTITY, -1);
+		long uid = Long.MIN_VALUE;
+		long cid = Long.MIN_VALUE;
 		switch (target) {
 		case CATEGORIES:
 			intent.putExtra(C.HTTP_URI, C.DOMAIN + "/categories");
@@ -64,12 +68,20 @@ public class ServiceHelper {
 			intent.putExtra(C.HTTP_URI, C.DOMAIN + "/items?type=6&count=20");
 			break;
 		case USER_ITEMS:
-			long uid = intent.getLongExtra(C.UID, -1);
+			uid = intent.getLongExtra(C.UID, -1);
 			intent.putExtra(C.HTTP_URI, C.DOMAIN + String.format("/items?type=4&count=%d&uid=%d&deal=0&last_id=0", C.DEFAULT_LIST_SIZE, uid));
 			break;
 		case CATEGORY_ITEMS:
-			long cid = intent.getLongExtra(C.CID, -1);
+			cid = intent.getLongExtra(C.CID, -1);
 			intent.putExtra(C.HTTP_URI, C.DOMAIN + String.format("/items?type=5&count=%d&cid=%d&last_id=0", C.DEFAULT_LIST_SIZE, cid));
+			break;
+		case USER_CLOSED_ITEMS:
+			uid = intent.getLongExtra(C.UID, -1);
+			intent.putExtra(C.HTTP_URI, C.DOMAIN + String.format("/items?type=7&count=%d&uid=%d&last_id=0", C.DEFAULT_LIST_SIZE, uid));
+			break;
+		case USER_DEAL_ITEMS:
+			uid = intent.getLongExtra(C.UID, uid);
+			intent.putExtra(C.HTTP_URI, C.DOMAIN + String.format("/items?type=4&count=%d&uid=%d&deal=1", C.DEFAULT_LIST_SIZE, uid));
 			break;
 		default:
 			throw new IllegalArgumentException("sorry, 404 for the target[" + target + "]");
@@ -82,7 +94,7 @@ public class ServiceHelper {
 		JSONObject data = RESTMethod.get(httpUri);
 		Log.i("json result", data.toString());
 		JSONArray array = null;
-		JSONObject object = null;
+		ContentValues[] items = null;
 		switch (intent.getIntExtra(C.TARGET_ENTITY, -1)) {
 		case CATEGORIES:
 			array = data.getJSONArray(C.CATEGORIES);
@@ -96,23 +108,33 @@ public class ServiceHelper {
 			break;
 		case LASTEST_ITEMS:
 			array = data.getJSONArray(C.ITEMS);
-			ContentValues[] items = Processor.toItems(array);
+			items = Processor.toItems(array);
 			contentResolver.bulkInsert(intent.getData(), items);
 			break;
 		case HOTTEST_ITEMS:
 			array = data.getJSONArray(C.ITEMS);
-			ContentValues[] hotItems = Processor.toItems(array);
-			contentResolver.bulkInsert(intent.getData(), hotItems);
+			items = Processor.toItems(array);
+			contentResolver.bulkInsert(intent.getData(), items);
 			break;
 		case USER_ITEMS:
 			array = data.getJSONArray(C.ITEMS);
-			ContentValues[] userItems = Processor.toItems(array);
-			contentResolver.bulkInsert(intent.getData(), userItems);
+			items = Processor.toItems(array);
+			contentResolver.bulkInsert(intent.getData(), items);
 			break;
 		case CATEGORY_ITEMS:
 			array = data.getJSONArray(C.ITEMS);
-			ContentValues[] categoryItems = Processor.toItems(array);
-			contentResolver.bulkInsert(intent.getData(), categoryItems);
+			items = Processor.toItems(array);
+			contentResolver.bulkInsert(intent.getData(), items);
+			break;
+		case USER_CLOSED_ITEMS:
+			array = data.getJSONArray(C.ITEMS);
+			items = Processor.toItems(array);
+			contentResolver.bulkInsert(intent.getData(), items);
+			break;
+		case USER_DEAL_ITEMS:
+			array = data.getJSONArray(C.ITEMS);
+			items = Processor.toItems(array);
+			contentResolver.bulkInsert(intent.getData(), items);
 			break;
 		default:
 			throw new IllegalArgumentException("sorry, 404 for the target!");

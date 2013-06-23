@@ -100,10 +100,16 @@ public class ItemsFragment extends ListFragment implements LoaderCallbacks<Curso
 			orderBy = C.item.HOTTEST_ORDER;
 			break;
 		case ServiceHelper.USER_ITEMS:
-			selection = C.item.SELLER_ID + " = " + getArguments().getLong(C.UID);
+			selection = C.item.CLOSED + " = 'false' and " + C.item.DEAL + " = 'false' and " + C.item.SELLER_ID + " = " + getArguments().getLong(C.UID);
 			break;
 		case ServiceHelper.CATEGORY_ITEMS:
 			selection = C.item.CLOSED + " = 'false' and " + C.item.DEAL + " = 'false' and " + C.CATEGORY + " = '" + getArguments().getString(C.category.NAME) + "'";
+			break;
+		case ServiceHelper.USER_CLOSED_ITEMS:
+			selection = C.item.CLOSED + " = 'true' and " + C.item.DEAL + " = 'false' and " + getArguments().getLong(C.UID);
+			break;
+		case ServiceHelper.USER_DEAL_ITEMS:
+			selection = C.item.DEAL + " = 'true' and " + getArguments().getLong(C.UID);
 			break;
 		default:
 			selection = C.item.CLOSED + " = 'false' and " + C.item.DEAL + " = 'false'";
