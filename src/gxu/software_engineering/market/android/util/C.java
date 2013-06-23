@@ -120,6 +120,7 @@ public final class C {
 		public static final String DESCRIPTION = "description";
 		
 		public static final String HOTTEST_ORDER = CLICK_TIMES + " desc";
+		public static final String LATEST_ORDER = ADDED_TIME + " desc";
 	}
 
 }

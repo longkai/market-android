@@ -79,12 +79,14 @@ public class ItemsFragment extends ListFragment implements LoaderCallbacks<Curso
 		intent.setData(uri);
 		intent.putExtra(C.TARGET_ENTITY, type);
 		getActivity().startService(intent);
+		
 		String orderBy = null;
 		switch (type) {
 		case ServiceHelper.HOTTEST_ITEMS:
 			orderBy = C.item.HOTTEST_ORDER;
 			break;
 		default:
+			orderBy = C.item.LATEST_ORDER;
 			break;
 		}
 		return new CursorLoader(getActivity(), uri, null, null, null, orderBy);
