@@ -23,6 +23,8 @@
 package gxu.software_engineering.market.android.activity;
 
 import gxu.software_engineering.market.android.ui.ItemsFragment;
+import gxu.software_engineering.market.android.util.C;
+import gxu.software_engineering.market.android.util.ServiceHelper;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -48,6 +50,7 @@ public class ItemsActivity extends SherlockFragmentActivity {
 		FragmentManager fm = getSupportFragmentManager();
 		if (fm.findFragmentByTag("items") == null) {
 			Fragment fragment = new ItemsFragment();
+			fragment.setArguments(getIntent().getExtras());
 			fm.beginTransaction()
 				.replace(cn.longkai.android.R.id.fragment_container, fragment, "items")
 				.commit();

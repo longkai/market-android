@@ -26,13 +26,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cn.longkai.android.util.RESTMethod;
-import gxu.software_engineering.market.android.provider.MarketProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import cn.longkai.android.util.RESTMethod;
 
 /**
  * 服务组件工具类。
@@ -47,6 +45,7 @@ public class ServiceHelper {
 	public static final int LASTEST_USERS = 2;
 	public static final int LASTEST_ITEMS = 3;
 	public static final int HOTTEST_ITEMS = 4;
+	public static final int USER_ITEMS = 5;
 	
 	public static void pre(Intent intent) {
 		int target = intent.getIntExtra(C.TARGET_ENTITY, -1);
@@ -58,10 +57,14 @@ public class ServiceHelper {
 			intent.putExtra(C.HTTP_URI, C.DOMAIN + "/users?type=1&count=50");
 			break;
 		case LASTEST_ITEMS:
-			intent.putExtra(C.HTTP_URI, C.DOMAIN + "/items?type=4&uid=1&deal=0&count=10&last_id=0");
+			intent.putExtra(C.HTTP_URI, C.DOMAIN + "/items?type=1&count=50");
 			break;
 		case HOTTEST_ITEMS:
 			intent.putExtra(C.HTTP_URI, C.DOMAIN + "/items?type=6&count=20");
+			break;
+		case USER_ITEMS:
+			int uid = intent.getIntExtra(C.UID, -1);
+			intent.putExtra(C.HTTP_URI, C.DOMAIN + String.format("/items?type=4&count=10&uid=%d&deal=0&last_id=0", uid));
 			break;
 		default:
 			throw new IllegalArgumentException("sorry, 404 for the target[" + target + "]");
@@ -69,7 +72,9 @@ public class ServiceHelper {
 	}
 	
 	public static void doing(ContentResolver contentResolver, Intent intent) throws JSONException {
-		JSONObject data = RESTMethod.get(intent.getStringExtra(C.HTTP_URI));
+		String httpUri = intent.getStringExtra(C.HTTP_URI);
+		Log.i("http uri", httpUri);
+		JSONObject data = RESTMethod.get(httpUri);
 		Log.i("json result", data.toString());
 		JSONArray array = null;
 		JSONObject object = null;
@@ -93,6 +98,11 @@ public class ServiceHelper {
 			array = data.getJSONArray(C.ITEMS);
 			ContentValues[] hotItems = Processor.toItems(array);
 			contentResolver.bulkInsert(intent.getData(), hotItems);
+			break;
+		case USER_ITEMS:
+			array = data.getJSONArray(C.ITEMS);
+			ContentValues[] userItems = Processor.toItems(array);
+			contentResolver.bulkInsert(intent.getData(), userItems);
 			break;
 		default:
 			throw new IllegalArgumentException("sorry, 404 for the target!");

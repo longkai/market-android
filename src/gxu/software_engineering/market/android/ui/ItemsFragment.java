@@ -81,15 +81,20 @@ public class ItemsFragment extends ListFragment implements LoaderCallbacks<Curso
 		getActivity().startService(intent);
 		
 		String orderBy = null;
+		String selection = null;
 		switch (type) {
 		case ServiceHelper.HOTTEST_ITEMS:
 			orderBy = C.item.HOTTEST_ORDER;
 			break;
+		case ServiceHelper.USER_ITEMS:
+			selection = C.item.SELLER_ID + " = " + getArguments().getLong(C.UID);
+			break;
 		default:
+			selection = C.item.CLOSED + " = null or " + C.item.CLOSED + " is false";
 			orderBy = C.item.LATEST_ORDER;
 			break;
 		}
-		return new CursorLoader(getActivity(), uri, null, null, null, orderBy);
+		return new CursorLoader(getActivity(), uri, null, selection, null, orderBy);
 	}
 
 	@Override

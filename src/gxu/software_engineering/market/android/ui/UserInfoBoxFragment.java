@@ -25,6 +25,7 @@ package gxu.software_engineering.market.android.ui;
 import gxu.software_engineering.market.android.R;
 import gxu.software_engineering.market.android.activity.ItemsActivity;
 import gxu.software_engineering.market.android.util.C;
+import gxu.software_engineering.market.android.util.ServiceHelper;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -73,8 +74,9 @@ public class UserInfoBoxFragment extends DialogFragment {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					Intent intent = new Intent(getActivity(), ItemsActivity.class);
+					intent.putExtra(C.ITEMS_TYPE, ServiceHelper.USER_ITEMS);
 					intent.putExtra(C.UID, c.getLong(c.getColumnIndex(C._ID)));
-					intent.putExtra(C.DEAL, false);
+					intent.putExtra(C.DEAL, 0);
 					intent.putExtra(C.COUNT, C.DEFAULT_LIST_SIZE);
 					getActivity().startActivity(intent);
 				}

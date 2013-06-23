@@ -80,6 +80,7 @@ public class Processor {
 		ContentValues values = new ContentValues();
 		JSONObject category = json.getJSONObject(C.CATEGORY);
 		JSONObject seller = json.getJSONObject(C.SELLER);
+		values.put(C._ID, json.getLong(C.ID));
 		values.put(C.item.ADDED_TIME, json.getLong(C.item.ADDED_TIME));
 		values.put(C.item.CATEGORY, category.getString(C.category.NAME));
 		values.put(C.item.CLICK_TIMES, json.getLong(C.item.CLICK_TIMES));
