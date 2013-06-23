@@ -53,7 +53,7 @@ public class UserInfoBoxFragment extends DialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		long id = getArguments().getLong(C.ID);
-		Cursor c = getActivity().getContentResolver().query(Uri.parse(C.BASE_URI + C.USERS + "/" + id), null, null, null, null);
+		final Cursor c = getActivity().getContentResolver().query(Uri.parse(C.BASE_URI + C.USERS + "/" + id), null, null, null, null);
 		
 		if (!c.moveToNext()) {
 			throw new RuntimeException("sorry, not found this person!");
@@ -61,9 +61,9 @@ public class UserInfoBoxFragment extends DialogFragment {
 		
 		long mills = c.getLong(c.getColumnIndex(C.user.REGISTER_TIME));
 		String[] infos = new String[NAMES.length];
-		infos[0] = c.getString(c.getColumnIndex(C.user.REAL_NAME));
-		infos[1] = c.getString(c.getColumnIndex(C.user.CONTACT));
-		infos[2] = DateUtils.getRelativeTimeSpanString(mills).toString();
+		infos[0] = NAMES[0] + c.getString(c.getColumnIndex(C.user.REAL_NAME));
+		infos[1] = NAMES[1] + c.getString(c.getColumnIndex(C.user.CONTACT));
+		infos[2] = NAMES[2] + DateUtils.getRelativeTimeSpanString(mills).toString();
 		
 		builder.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, infos), null);
 		builder.setTitle(c.getString(c.getColumnIndex(C.user.NICK))).setIcon(R.drawable.social_person)
@@ -73,6 +73,9 @@ public class UserInfoBoxFragment extends DialogFragment {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					Intent intent = new Intent(getActivity(), ItemsActivity.class);
+					intent.putExtra(C.UID, c.getLong(c.getColumnIndex(C._ID)));
+					intent.putExtra(C.DEAL, false);
+					intent.putExtra(C.COUNT, C.DEFAULT_LIST_SIZE);
 					getActivity().startActivity(intent);
 				}
 			});
