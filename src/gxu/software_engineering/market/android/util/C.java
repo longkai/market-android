@@ -40,8 +40,41 @@ public final class C {
 	public static final String USER_INFO_MODIFY_TYPE = "user_type";
 	
 	public static final int CONTACT = 0;
-	
 	public static final int PASSWORD = 1;
 			
+	public static final String		ID							= "id";
+	public static final String		_ID							= "_id";
+	public static final String		DESC_SORT					= " _id DESC";
+	public static final String		ASC_SORT					= " _id ASC";
+
+	public static final String		CATEGORIES					= "categories";
+	public static final String		CATEGORY					= "category";
+	public static final String		USERS						= "users";
+	public static final String		USER						= "user";
+	public static final String		ITEMS						= "items";
+	public static final String		ITEM						= "item";
+	public static final String		RECORDS						= "records";
+	public static final String		RECORD						= "record";
+
+	public static final String	AUTHORITY	= "gxu.software_engineering.market.provider";
+	public static final String	BASE_URI	= "content://" + AUTHORITY + "/";
+	
+	public static final String	STATUS		= "status";
+	public static final String	REASON		= "reason";
+	public static final String	MSG			= "msg";
+	public static final int		OK			= 1;
+	public static final int		NO			= 0;
+	
+	public static final String DOMAIN = "http://10.0.2.2";
+	
+	public static final String ACCOUNT = "account";
+	public static final String PWD = "pwd";
+	
+	public static final class category {
+		public static final String	NAME		= "name";
+		public static final String	EXTRA		= "extra";
+		public static final String	ADDED_TIME	= "added_time";
+		public static final String	DESCRIPTION	= "description";
+	}
 
 }

@@ -31,6 +31,9 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name="gxu.software_engineering.market.android.activity.UpdateItemActivity"
             android:windowSoftInputMode="adjustResize" />
+        
+        <provider android:name="gxu.software_engineering.market.android.provider.MarketProvider"
+            android:authorities="gxu.software_engineering.market.provider" />
     </application>
 
 </manifest>
