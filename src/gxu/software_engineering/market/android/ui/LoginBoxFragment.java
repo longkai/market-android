@@ -60,6 +60,7 @@ public class LoginBoxFragment extends DialogFragment {
 
 	private ProgressDialog progressDialog;
 	private MarketApp app;
+//	private Str
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -128,6 +129,7 @@ public class LoginBoxFragment extends DialogFragment {
 			Log.i("login result", result.toString());
 			try {
 				if (result.getInt(C.STATUS) == C.OK) {
+					app.getPrefs().edit().putString(C.user.NICK, result.getJSONObject(C.USER).getString(C.user.NICK)).commit();
 					return result.getJSONObject(C.USER).getLong(C.ID);
 				} else {
 					return Long.MIN_VALUE;
@@ -142,6 +144,7 @@ public class LoginBoxFragment extends DialogFragment {
 			if (NetworkUtils.connected(getActivity())) {
 				connected = true;
 				progressDialog = new ProgressDialog(getActivity());
+				progressDialog.setTitle(R.string.logining);
 				progressDialog.show();
 			}
 		}

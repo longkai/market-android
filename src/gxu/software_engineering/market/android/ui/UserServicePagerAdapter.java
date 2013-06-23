@@ -22,10 +22,14 @@
  */
 package gxu.software_engineering.market.android.ui;
 
+import gxu.software_engineering.market.android.MarketApp;
 import gxu.software_engineering.market.android.util.C;
+import gxu.software_engineering.market.android.util.ServiceHelper;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 /**
  * 用户自服务pager。
@@ -40,10 +44,22 @@ public class UserServicePagerAdapter extends FragmentStatePagerAdapter {
 	
 	public UserServicePagerAdapter(FragmentManager fm) {
 		super(fm);
+		long uid = MarketApp.marketApp().getPrefs().getLong(C.UID, -1);
+		Log.i("uid", String.format("%d", uid));
 		fragments = new Fragment[C.PAGER_SIZE];
 		Fragment fragment = null;
+		Bundle args = null;
 		for (int i = 0; i < C.PAGER_SIZE; i++) {
-			fragment = new ItemsFragment();
+			switch (i) {
+			default:
+			case 0:
+				args = new Bundle();
+				args.putInt(C.ITEMS_TYPE, ServiceHelper.USER_ITEMS);
+				args.putLong(C.UID, uid);
+				fragment = new ItemsFragment();
+				fragment.setArguments(args);
+				break;
+			}
 			fragments[i] = fragment;
 		}
 	}

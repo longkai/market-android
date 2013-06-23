@@ -47,6 +47,7 @@
 	<string name="network_down">亲，你的网络不给力啊-_-</string>    
 	<string name="resolve_data_error">数据解析出错！请稍后再试！</string>
 	
+	<string name="logining">努力登陆中。。。</string>
 	<string name="login_fail">登陆失败！%1$s</string>
 	<string name="wrong_login_info">用户名密码错误！</string>
 	<string name="login_ok">登陆成功！</string>

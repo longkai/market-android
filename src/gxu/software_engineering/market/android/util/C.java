@@ -35,7 +35,7 @@ public final class C {
 	
 	public static final String[] PAGER_TITLES = {"热门物品", "最新物品", "卖家列表"};
 	
-	public static final String[] USER_SERVICE_PAGER_TTILES = {"已关闭物品", "代售物品", "成功交易"};
+	public static final String[] USER_SERVICE_PAGER_TTILES = {"已关闭物品", "待售物品", "成功交易"};
 	
 	public static final String USER_INFO_MODIFY_TYPE = "user_type";
 	

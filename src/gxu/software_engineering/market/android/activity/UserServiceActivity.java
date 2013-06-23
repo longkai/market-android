@@ -22,6 +22,7 @@
  */
 package gxu.software_engineering.market.android.activity;
 
+import gxu.software_engineering.market.android.MarketApp;
 import gxu.software_engineering.market.android.R;
 import gxu.software_engineering.market.android.ui.EditUserInfoBoxFragment;
 import gxu.software_engineering.market.android.ui.UserServicePagerAdapter;
@@ -54,6 +55,9 @@ public class UserServiceActivity extends SherlockFragmentActivity {
 		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(new UserServicePagerAdapter(fm));
 		pager.setCurrentItem(1);
+		
+		getSupportActionBar().setTitle(
+				MarketApp.marketApp().getPrefs().getString(C.user.NICK, getResources().getString(R.string.app_name)));
 	}
 	
 	@Override
