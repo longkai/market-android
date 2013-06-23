@@ -75,7 +75,7 @@ public class CategoriesFragment extends ListFragment implements LoaderCallbacks<
 		Uri data = Uri.parse(C.BASE_URI + C.CATEGORIES);
 		
 		Intent intent = new Intent(getActivity(), FetchService.class);
-		intent.putExtra(C.TARGET_ENTITY, MarketProvider.CATEGORIES);
+		intent.putExtra(C.TARGET_ENTITY, ServiceHelper.CATEGORIES);
 		intent.setData(data);
 		getActivity().startService(intent);
 		

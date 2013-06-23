@@ -46,4 +46,6 @@
     
 	<string name="network_down">亲，你的网络不给力啊-_-</string>    
 	<string name="resolve_data_error">数据解析出错！请稍后再试！</string>
+	
+	<string name="publish_at">发布于\t</string>
 </resources>

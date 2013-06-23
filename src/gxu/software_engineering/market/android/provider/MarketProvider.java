@@ -48,10 +48,12 @@ public class MarketProvider extends ContentProvider {
 	public static final String MULTIPLE_RECORDS_MIME_TYPE = "vnd.android.cursor.dir/vnd." + C.AUTHORITY + ".";
 	
 
-	public static final int	CATEGORIES						= 0;
-	public static final int	CATEGORY						= 1;
-	public static final int	USERS						= 2;
-	public static final int	USER						= 3;
+	private static final int	CATEGORIES						= 0;
+	private static final int	CATEGORY						= 1;
+	private static final int	USERS						= 2;
+	private static final int	USER						= 3;
+	private static final int	ITEMS						= 4;
+	private static final int	ITEM						= 5;
 	
 	private static UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -60,6 +62,8 @@ public class MarketProvider extends ContentProvider {
 		matcher.addURI(C.AUTHORITY, C.CATEGORIES + "/#", CATEGORY);
 		matcher.addURI(C.AUTHORITY, C.USERS, USERS);
 		matcher.addURI(C.AUTHORITY, C.USERS + "/#", USER);
+		matcher.addURI(C.AUTHORITY, C.ITEMS, ITEMS);
+		matcher.addURI(C.AUTHORITY, C.ITEMS + "/#", ITEM);
 	}
 
 	private MarketData data;
@@ -81,6 +85,10 @@ public class MarketProvider extends ContentProvider {
 			return MULTIPLE_RECORDS_MIME_TYPE + C.USERS;
 		case USER:
 			return SINGLE_RECORD_MIME_TYPE + C.USER;
+		case ITEMS:
+			return MULTIPLE_RECORDS_MIME_TYPE + C.ITEMS;
+		case ITEM:
+			return SINGLE_RECORD_MIME_TYPE + C.ITEM;
 		default:
 			throw new IllegalArgumentException("404 for the URI[" + uri + "]");
 		}
@@ -108,6 +116,13 @@ public class MarketProvider extends ContentProvider {
 			selection = " _id = " + uri.getLastPathSegment();
 			cursor = db.query(C.USERS, projection, selection, selectionArgs, null, null, null);
 			break;
+		case ITEMS:
+			cursor = db.query(C.ITEMS, projection, selection, selectionArgs, null, null, sortOrder);
+			break;
+		case ITEM:
+			selection = " _id = " + uri.getLastPathSegment();
+			cursor = db.query(C.ITEM, projection, selection, selectionArgs, null, null, null);
+			break;
 		default:
 			throw new IllegalArgumentException("404 for the URI[" + uri + "]");
 		}
@@ -126,6 +141,9 @@ public class MarketProvider extends ContentProvider {
 			break;
 		case USERS:
 			table = C.USERS;
+			break;
+		case ITEMS:
+			table = C.ITEMS;
 			break;
 		default:
 			throw new IllegalArgumentException("404 for the URI[" + uri + "]");
@@ -156,6 +174,9 @@ public class MarketProvider extends ContentProvider {
 			break;
 		case USERS:
 			table = C.USERS;
+			break;
+		case ITEMS:
+			table = C.ITEMS;
 			break;
 		default:
 			throw new IllegalArgumentException("404 for the URI[" + uri + "]");
@@ -202,12 +223,30 @@ public class MarketProvider extends ContentProvider {
 				.append(C.user.REGISTER_TIME).append(" varchar(30), ")
 				.append(C.user.LAST_LOGIN_TIME).append(" varchar(30))");
 			db.execSQL(sql.toString());
+			
+			sql.setLength(0);
+			sql.append("CREATE TABLE ").append(C.ITEMS).append(" (")
+				.append(C._ID).append(" integer primary key, ")
+				.append(C.item.ADDED_TIME).append(" varchar(30), ")
+				.append(C.item.NAME).append(" varchar(18), ")
+				.append(C.item.CATEGORY).append(" integer, ")
+				.append(C.item.CLICK_TIMES).append(" varchar(11), ")
+				.append(C.item.CLOSED).append(" varchar(5), ")
+				.append(C.item.DEAL).append(" varchar(5), ")
+				.append(C.item.DESCRIPTION).append(" varchar(255), ")
+				.append(C.item.LAST_MODIFIED_TIME).append(" varchar(30), ")
+				.append(C.item.PRICE).append(" float, ")
+				.append(C.item.SELLER).append(" varchar(20), ")
+				.append(C.item.SELLER_ID).append(" integer, ")
+				.append(C.item.EXTRA).append(" varchar(255))");
+			db.execSQL(sql.toString());
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL("DROP TABLE IF EXISTS " + C.CATEGORIES);
 			db.execSQL("DROP TABLE IF EXISTS " + C.USERS);
+			db.execSQL("DROP TABLE IF EXISTS " + C.ITEMS);
 			onCreate(db);
 		}
 		

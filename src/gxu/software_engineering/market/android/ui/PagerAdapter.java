@@ -23,6 +23,8 @@
 package gxu.software_engineering.market.android.ui;
 
 import gxu.software_engineering.market.android.util.C;
+import gxu.software_engineering.market.android.util.ServiceHelper;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -44,11 +46,15 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 		Fragment fragment = null;
 		for (int i = 0; i < C.PAGER_SIZE; i++) {
 			switch (i) {
+			default:
+			case 1:
+				Bundle args = new Bundle();
+				args.putInt(C.ITEMS_TYPE, ServiceHelper.LASTEST_ITEMS);
+				fragment = new ItemsFragment();
+				fragment.setArguments(args);
+				break;
 			case 2:
 				fragment = new UsersFragment(); 
-				break;
-			default:
-				fragment = new ItemsFragment();
 				break;
 			}
 			fragments[i] = fragment;

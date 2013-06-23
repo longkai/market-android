@@ -75,4 +75,31 @@ public class Processor {
 		}
 		return values;
 	}
+	
+	public static ContentValues toItem(JSONObject json) throws JSONException {
+		ContentValues values = new ContentValues();
+		JSONObject category = json.getJSONObject(C.CATEGORY);
+		JSONObject seller = json.getJSONObject(C.SELLER);
+		values.put(C.item.ADDED_TIME, json.getLong(C.item.ADDED_TIME));
+		values.put(C.item.CATEGORY, category.getString(C.category.NAME));
+		values.put(C.item.CLICK_TIMES, json.getLong(C.item.CLICK_TIMES));
+		values.put(C.item.CLOSED, json.getString(C.item.CLOSED));
+		values.put(C.item.DEAL, json.getString(C.item.DEAL));
+		values.put(C.item.DESCRIPTION, json.getString(C.item.DESCRIPTION));
+		values.put(C.item.EXTRA, json.getString(C.item.EXTRA));
+		values.put(C.item.LAST_MODIFIED_TIME, json.getLong(C.item.LAST_MODIFIED_TIME));
+		values.put(C.item.NAME, json.getString(C.item.NAME));
+		values.put(C.item.PRICE, json.getDouble(C.item.PRICE));
+		values.put(C.item.SELLER, seller.getString(C.user.NICK));
+		values.put(C.item.SELLER_ID, seller.getLong(C.ID));
+		return values;
+	}
+	
+	public static ContentValues[] toItems(JSONArray array) throws JSONException {
+		ContentValues[] values = new ContentValues[array.length()];
+		for (int i = 0; i < values.length; i++) {
+			values[i] = toItem(array.getJSONObject(i));
+		}
+		return values;
+	}
 }

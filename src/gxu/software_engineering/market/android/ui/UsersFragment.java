@@ -26,6 +26,7 @@ import gxu.software_engineering.market.android.adapter.UsersAdapter;
 import gxu.software_engineering.market.android.provider.MarketProvider;
 import gxu.software_engineering.market.android.service.FetchService;
 import gxu.software_engineering.market.android.util.C;
+import gxu.software_engineering.market.android.util.ServiceHelper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -77,7 +78,7 @@ public class UsersFragment extends ListFragment implements LoaderCallbacks<Curso
 		Uri data = Uri.parse(C.BASE_URI + C.USERS);
 		Intent intent = new Intent(getActivity(), FetchService.class);
 		intent.setData(data);
-		intent.putExtra(C.TARGET_ENTITY, MarketProvider.USERS);
+		intent.putExtra(C.TARGET_ENTITY, ServiceHelper.LASTEST_USERS);
 		getActivity().startService(intent);
 		return new CursorLoader(getActivity(), data, null, null, null, null);
 	}

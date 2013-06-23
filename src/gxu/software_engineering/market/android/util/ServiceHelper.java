@@ -43,14 +43,21 @@ import android.util.Log;
  */
 public class ServiceHelper {
 	
+	public static final int CATEGORIES = 1;
+	public static final int LASTEST_USERS = 2;
+	public static final int LASTEST_ITEMS = 3;
+	
 	public static void pre(Intent intent) {
 		int target = intent.getIntExtra(C.TARGET_ENTITY, -1);
 		switch (target) {
-		case MarketProvider.CATEGORIES:
+		case CATEGORIES:
 			intent.putExtra(C.HTTP_URI, C.DOMAIN + "/categories");
 			break;
-		case MarketProvider.USERS:
+		case LASTEST_USERS:
 			intent.putExtra(C.HTTP_URI, C.DOMAIN + "/users?type=1&count=50");
+			break;
+		case LASTEST_ITEMS:
+			intent.putExtra(C.HTTP_URI, C.DOMAIN + "/items?type=4&uid=1&deal=0&count=10&last_id=0");
 			break;
 		default:
 			throw new IllegalArgumentException("sorry, 404 for the target[" + target + "]");
@@ -63,15 +70,20 @@ public class ServiceHelper {
 		JSONArray array = null;
 		JSONObject object = null;
 		switch (intent.getIntExtra(C.TARGET_ENTITY, -1)) {
-		case MarketProvider.CATEGORIES:
+		case CATEGORIES:
 			array = data.getJSONArray(C.CATEGORIES);
 			ContentValues[] categories = Processor.toCategories(array);
 			contentResolver.bulkInsert(intent.getData(), categories);
 			break;
-		case MarketProvider.USERS:
+		case LASTEST_USERS:
 			array = data.getJSONArray(C.USERS);
 			ContentValues[] users = Processor.toUsers(array);
 			contentResolver.bulkInsert(intent.getData(), users);
+			break;
+		case LASTEST_ITEMS:
+			array = data.getJSONArray(C.ITEMS);
+			ContentValues[] items = Processor.toItems(array);
+			contentResolver.bulkInsert(intent.getData(), items);
 			break;
 		default:
 			throw new IllegalArgumentException("sorry, 404 for the target!");

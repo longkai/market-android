@@ -74,6 +74,20 @@ public final class C {
 	public static final String TARGET_ENTITY = "target_entity";
 	public static final String HTTP_URI = "http_uri";
 	
+	public static final String SELLER = "seller";
+	public static final String UID = "uid";
+	public static final String DEAL = "deal";
+	public static final String LAST_ID = "last_id";
+	public static final String COUNT = "count";
+	
+	public static final int DEFAULT_LIST_SIZE = 50;
+	
+	public static final String ITEMS_TYPE = "items_type";
+	
+	public static final int HOT_ITEMS = 1;
+	public static final int LATEST_ITEMS = 2;
+//	public static final int HOT_ITEMS = 1;
+	
 	public static final class category {
 		public static final String	NAME		= "name";
 		public static final String	EXTRA		= "extra";
@@ -89,6 +103,21 @@ public final class C {
 		public static final String LAST_LOGIN_TIME = "last_login_time";
 		public static final String LOGIN_TIMES = "login_times";
 		public static final String REAL_NAME = "real_name";
+	}
+	
+	public static final class item {
+		public static final String NAME = "name";
+		public static final String CATEGORY = "category";
+		public static final String PRICE = "price";
+		public static final String SELLER = "seller";
+		public static final String SELLER_ID = "seller_id";
+		public static final String DEAL = "deal";
+		public static final String EXTRA = "extra";
+		public static final String ADDED_TIME = "added_time";
+		public static final String LAST_MODIFIED_TIME = "last_modified_time";
+		public static final String CLICK_TIMES = "click_times";
+		public static final String CLOSED = "closed";
+		public static final String DESCRIPTION = "description";
 	}
 
 }
