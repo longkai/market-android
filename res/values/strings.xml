@@ -43,4 +43,7 @@
     <string name="nick">昵称</string>
     <string name="contact">联系方式</string>
     <string name="true_name">真实姓名</string>
+    
+	<string name="network_down">亲，你的网络不给力啊-_-</string>    
+	<string name="resolve_data_error">数据解析出错！请稍后再试！</string>
 </resources>

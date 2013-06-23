@@ -48,8 +48,8 @@ public class MarketProvider extends ContentProvider {
 	public static final String MULTIPLE_RECORDS_MIME_TYPE = "vnd.android.cursor.dir/vnd." + C.AUTHORITY + ".";
 	
 
-	private static final int	CATEGORIES						= 0;
-	private static final int	CATEGORY						= 1;
+	public static final int	CATEGORIES						= 0;
+	public static final int	CATEGORY						= 1;
 	
 	private static UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 

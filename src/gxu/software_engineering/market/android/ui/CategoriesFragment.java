@@ -24,7 +24,10 @@ package gxu.software_engineering.market.android.ui;
 
 import gxu.software_engineering.market.android.activity.ItemsActivity;
 import gxu.software_engineering.market.android.adapter.CategoriesAdapter;
+import gxu.software_engineering.market.android.provider.MarketProvider;
+import gxu.software_engineering.market.android.service.FetchService;
 import gxu.software_engineering.market.android.util.C;
+import gxu.software_engineering.market.android.util.ServiceHelper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -69,7 +72,14 @@ public class CategoriesFragment extends ListFragment implements LoaderCallbacks<
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-		return new CursorLoader(getActivity(), Uri.parse(C.BASE_URI + C.CATEGORIES), null, null, null, null);
+		Uri data = Uri.parse(C.BASE_URI + C.CATEGORIES);
+		
+		Intent intent = new Intent(getActivity(), FetchService.class);
+		intent.putExtra(C.TARGET_ENTITY, MarketProvider.CATEGORIES);
+		intent.setData(data);
+		getActivity().startService(intent);
+		
+		return new CursorLoader(getActivity(), data, null, null, null, C.ASC_SORT);
 	}
 
 	@Override

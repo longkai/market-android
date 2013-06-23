@@ -65,10 +65,14 @@ public final class C {
 	public static final int		OK			= 1;
 	public static final int		NO			= 0;
 	
-	public static final String DOMAIN = "http://10.0.2.2";
+//	public static final String DOMAIN = "http://10.0.2.2";
+	public static final String DOMAIN = "http://192.168.1.103";
 	
 	public static final String ACCOUNT = "account";
 	public static final String PWD = "pwd";
+	
+	public static final String TARGET_ENTITY = "target_entity";
+	public static final String HTTP_URI = "http_uri";
 	
 	public static final class category {
 		public static final String	NAME		= "name";

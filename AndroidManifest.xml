@@ -3,6 +3,9 @@
     package="gxu.software_engineering.market.android"
     android:versionCode="1"
     android:versionName="1.0" >
+    
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -34,6 +37,7 @@
         
         <provider android:name="gxu.software_engineering.market.android.provider.MarketProvider"
             android:authorities="gxu.software_engineering.market.provider" />
+        <service android:name="gxu.software_engineering.market.android.service.FetchService" />
     </application>
 
 </manifest>
