@@ -56,7 +56,17 @@ public class ItemsActivity extends SherlockFragmentActivity {
 				.commit();
 		}
 		
-		getSupportActionBar().setTitle("查看类别列表！");
+		String title = null;
+		switch (getIntent().getIntExtra(C.ITEMS_TYPE, -1)) {
+		case ServiceHelper.USER_ITEMS:
+			title = getIntent().getStringExtra(C.user.NICK) + " 出售的物品";
+			break;
+
+		default:
+			title = "物品列表";
+			break;
+		}
+		getSupportActionBar().setTitle(title);
 	}
 
 	@Override

@@ -63,8 +63,8 @@ public class ServiceHelper {
 			intent.putExtra(C.HTTP_URI, C.DOMAIN + "/items?type=6&count=20");
 			break;
 		case USER_ITEMS:
-			int uid = intent.getIntExtra(C.UID, -1);
-			intent.putExtra(C.HTTP_URI, C.DOMAIN + String.format("/items?type=4&count=10&uid=%d&deal=0&last_id=0", uid));
+			long uid = intent.getLongExtra(C.UID, -1);
+			intent.putExtra(C.HTTP_URI, C.DOMAIN + String.format("/items?type=4&count=20&uid=%d&deal=0&last_id=0", uid));
 			break;
 		default:
 			throw new IllegalArgumentException("sorry, 404 for the target[" + target + "]");

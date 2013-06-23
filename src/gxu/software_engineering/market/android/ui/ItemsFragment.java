@@ -74,8 +74,17 @@ public class ItemsFragment extends ListFragment implements LoaderCallbacks<Curso
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		int type = getArguments().getInt(C.ITEMS_TYPE, ServiceHelper.LASTEST_ITEMS);
 		Log.i("tatget!!!", String.format("%s", type));
-		Uri uri = Uri.parse(C.BASE_URI + C.ITEMS);
+		
 		Intent intent = new Intent(getActivity(), FetchService.class);
+		
+		switch (type) {
+		default:
+		case ServiceHelper.USER_ITEMS:
+			intent.putExtra(C.UID, getArguments().getLong(C.UID));
+			break;
+		}
+		
+		Uri uri = Uri.parse(C.BASE_URI + C.ITEMS);
 		intent.setData(uri);
 		intent.putExtra(C.TARGET_ENTITY, type);
 		getActivity().startService(intent);

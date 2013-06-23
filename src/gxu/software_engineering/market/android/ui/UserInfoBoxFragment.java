@@ -76,6 +76,7 @@ public class UserInfoBoxFragment extends DialogFragment {
 					Intent intent = new Intent(getActivity(), ItemsActivity.class);
 					intent.putExtra(C.ITEMS_TYPE, ServiceHelper.USER_ITEMS);
 					intent.putExtra(C.UID, c.getLong(c.getColumnIndex(C._ID)));
+					intent.putExtra(C.user.NICK, c.getString(c.getColumnIndex(C.user.NICK)));
 					intent.putExtra(C.DEAL, 0);
 					intent.putExtra(C.COUNT, C.DEFAULT_LIST_SIZE);
 					getActivity().startActivity(intent);
