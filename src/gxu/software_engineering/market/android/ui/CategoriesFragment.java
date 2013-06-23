@@ -23,11 +23,17 @@
 package gxu.software_engineering.market.android.ui;
 
 import gxu.software_engineering.market.android.activity.ItemsActivity;
+import gxu.software_engineering.market.android.adapter.CategoriesAdapter;
+import gxu.software_engineering.market.android.util.C;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
@@ -37,29 +43,43 @@ import android.widget.ListView;
  * @email  im.longkai@gmail.com
  * @since  2013-6-22
  */
-public class CategoriesFragment extends ListFragment {
+public class CategoriesFragment extends ListFragment implements LoaderCallbacks<Cursor> {
 	
-	private static final String[] LIST = {"日用百货", "新旧书市", "电子产品"};
-
-	private ArrayAdapter<String> adapter;
+	private CategoriesAdapter mAdapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, LIST);
+		mAdapter = new CategoriesAdapter(getActivity());
 		setRetainInstance(true);
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		setListAdapter(adapter);
+		setListAdapter(mAdapter);
+		getLoaderManager().initLoader(0, null, this);
 	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		Intent intent = new Intent(getActivity(), ItemsActivity.class);
 		getActivity().startActivity(intent);
+	}
+
+	@Override
+	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
+		return new CursorLoader(getActivity(), Uri.parse(C.BASE_URI + C.CATEGORIES), null, null, null, null);
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
+		mAdapter.swapCursor(arg1);
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> arg0) {
+		mAdapter.swapCursor(null);
 	}
 	
 }
