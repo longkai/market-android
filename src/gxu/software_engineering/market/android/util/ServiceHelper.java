@@ -49,7 +49,9 @@ public class ServiceHelper {
 		case MarketProvider.CATEGORIES:
 			intent.putExtra(C.HTTP_URI, C.DOMAIN + "/categories");
 			break;
-
+		case MarketProvider.USERS:
+			intent.putExtra(C.HTTP_URI, C.DOMAIN + "/users?type=1&count=50");
+			break;
 		default:
 			throw new IllegalArgumentException("sorry, 404 for the target[" + target + "]");
 		}
@@ -58,13 +60,19 @@ public class ServiceHelper {
 	public static void doing(ContentResolver contentResolver, Intent intent) throws JSONException {
 		JSONObject data = RESTMethod.get(intent.getStringExtra(C.HTTP_URI));
 		Log.i("json result", data.toString());
+		JSONArray array = null;
+		JSONObject object = null;
 		switch (intent.getIntExtra(C.TARGET_ENTITY, -1)) {
 		case MarketProvider.CATEGORIES:
-			JSONArray array = data.getJSONArray(C.CATEGORIES);
+			array = data.getJSONArray(C.CATEGORIES);
 			ContentValues[] categories = Processor.toCategories(array);
 			contentResolver.bulkInsert(intent.getData(), categories);
 			break;
-
+		case MarketProvider.USERS:
+			array = data.getJSONArray(C.USERS);
+			ContentValues[] users = Processor.toUsers(array);
+			contentResolver.bulkInsert(intent.getData(), users);
+			break;
 		default:
 			throw new IllegalArgumentException("sorry, 404 for the target!");
 		}

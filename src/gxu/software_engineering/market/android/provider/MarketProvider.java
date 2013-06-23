@@ -50,12 +50,16 @@ public class MarketProvider extends ContentProvider {
 
 	public static final int	CATEGORIES						= 0;
 	public static final int	CATEGORY						= 1;
+	public static final int	USERS						= 2;
+	public static final int	USER						= 3;
 	
 	private static UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 
 	static {
 		matcher.addURI(C.AUTHORITY, C.CATEGORIES, CATEGORIES);
 		matcher.addURI(C.AUTHORITY, C.CATEGORIES + "/#", CATEGORY);
+		matcher.addURI(C.AUTHORITY, C.USERS, USERS);
+		matcher.addURI(C.AUTHORITY, C.USERS + "/#", USER);
 	}
 
 	private MarketData data;
@@ -73,6 +77,10 @@ public class MarketProvider extends ContentProvider {
 			return MULTIPLE_RECORDS_MIME_TYPE + C.CATEGORIES;
 		case CATEGORY:
 			return SINGLE_RECORD_MIME_TYPE + C.CATEGORY;
+		case USERS:
+			return MULTIPLE_RECORDS_MIME_TYPE + C.USERS;
+		case USER:
+			return SINGLE_RECORD_MIME_TYPE + C.USER;
 		default:
 			throw new IllegalArgumentException("404 for the URI[" + uri + "]");
 		}
@@ -93,6 +101,13 @@ public class MarketProvider extends ContentProvider {
 			selection = " _id = " + uri.getLastPathSegment();
 			cursor = db.query(C.CATEGORIES, projection, selection, selectionArgs, null, null, null);
 			break;
+		case USERS:
+			cursor = db.query(C.USERS, projection, selection, selectionArgs, null, null, sortOrder);
+			break;
+		case USER:
+			selection = " _id = " + uri.getLastPathSegment();
+			cursor = db.query(C.USERS, projection, selection, selectionArgs, null, null, null);
+			break;
 		default:
 			throw new IllegalArgumentException("404 for the URI[" + uri + "]");
 		}
@@ -108,6 +123,9 @@ public class MarketProvider extends ContentProvider {
 		switch (matcher.match(uri)) {
 		case CATEGORIES:
 			table = C.CATEGORIES;
+			break;
+		case USERS:
+			table = C.USERS;
 			break;
 		default:
 			throw new IllegalArgumentException("404 for the URI[" + uri + "]");
@@ -136,7 +154,9 @@ public class MarketProvider extends ContentProvider {
 		case CATEGORIES:
 			table = C.CATEGORIES;
 			break;
-
+		case USERS:
+			table = C.USERS;
+			break;
 		default:
 			throw new IllegalArgumentException("404 for the URI[" + uri + "]");
 		}
@@ -170,11 +190,24 @@ public class MarketProvider extends ContentProvider {
 				.append(C.category.ADDED_TIME).append(" varchar(30), ")
 				.append(C.category.DESCRIPTION).append(" varchar(255))");
 			db.execSQL(sql.toString());
+			
+			sql.setLength(0);
+			sql.append("CREATE TABLE ").append(C.USERS).append(" (")
+				.append(C._ID).append(" integer primary key, ")
+				.append(C.user.NICK).append(" varchar(7), ")
+				.append(C.user.ACCOUNT).append(" varchar(18), ")
+				.append(C.user.CONTACT).append(" varchar(11), ")
+				.append(C.user.REAL_NAME).append(" varchar(4), ")
+				.append(C.user.LOGIN_TIMES).append(" integer, ")
+				.append(C.user.REGISTER_TIME).append(" varchar(30), ")
+				.append(C.user.LAST_LOGIN_TIME).append(" varchar(30))");
+			db.execSQL(sql.toString());
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL("DROP TABLE IF EXISTS " + C.CATEGORIES);
+			db.execSQL("DROP TABLE IF EXISTS " + C.USERS);
 			onCreate(db);
 		}
 		

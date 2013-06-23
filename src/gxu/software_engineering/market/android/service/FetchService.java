@@ -71,6 +71,7 @@ public class FetchService extends IntentService {
 				ServiceHelper.pre(intent);
 				ServiceHelper.doing(getContentResolver(), intent);
 			} catch (JSONException e) {
+				e.printStackTrace();
 				handler.post(new Runnable() {
 					@Override
 					public void run() {

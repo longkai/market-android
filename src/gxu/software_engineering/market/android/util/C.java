@@ -80,5 +80,15 @@ public final class C {
 		public static final String	ADDED_TIME	= "added_time";
 		public static final String	DESCRIPTION	= "description";
 	}
+	
+	public static final class user {
+		public static final String NICK = "nick";
+		public static final String ACCOUNT = "account";
+		public static final String CONTACT = "contact";
+		public static final String REGISTER_TIME = "register_time";
+		public static final String LAST_LOGIN_TIME = "last_login_time";
+		public static final String LOGIN_TIMES = "login_times";
+		public static final String REAL_NAME = "real_name";
+	}
 
 }
