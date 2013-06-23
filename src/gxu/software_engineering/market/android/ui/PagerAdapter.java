@@ -44,11 +44,17 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 		super(fm);
 		fragments = new Fragment[C.PAGER_SIZE];
 		Fragment fragment = null;
+		Bundle args = null;
 		for (int i = 0; i < C.PAGER_SIZE; i++) {
 			switch (i) {
-			default:
+			case 0:
+				args = new Bundle();
+				args.putInt(C.ITEMS_TYPE, ServiceHelper.HOTTEST_ITEMS);
+				fragment = new ItemsFragment();
+				fragment.setArguments(args);
+				break;
 			case 1:
-				Bundle args = new Bundle();
+				args = new Bundle();
 				args.putInt(C.ITEMS_TYPE, ServiceHelper.LASTEST_ITEMS);
 				fragment = new ItemsFragment();
 				fragment.setArguments(args);
@@ -56,6 +62,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 			case 2:
 				fragment = new UsersFragment(); 
 				break;
+			default:
+				throw new RuntimeException("404 for the pager position[" + i + "]");
 			}
 			fragments[i] = fragment;
 		}

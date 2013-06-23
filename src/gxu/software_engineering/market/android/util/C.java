@@ -118,6 +118,8 @@ public final class C {
 		public static final String CLICK_TIMES = "click_times";
 		public static final String CLOSED = "closed";
 		public static final String DESCRIPTION = "description";
+		
+		public static final String HOTTEST_ORDER = CLICK_TIMES + " desc";
 	}
 
 }

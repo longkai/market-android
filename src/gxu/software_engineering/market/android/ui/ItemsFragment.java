@@ -73,12 +73,21 @@ public class ItemsFragment extends ListFragment implements LoaderCallbacks<Curso
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		int type = getArguments().getInt(C.ITEMS_TYPE, ServiceHelper.LASTEST_ITEMS);
+		Log.i("tatget!!!", String.format("%s", type));
 		Uri uri = Uri.parse(C.BASE_URI + C.ITEMS);
 		Intent intent = new Intent(getActivity(), FetchService.class);
 		intent.setData(uri);
 		intent.putExtra(C.TARGET_ENTITY, type);
 		getActivity().startService(intent);
-		return new CursorLoader(getActivity(), uri, null, null, null, null);
+		String orderBy = null;
+		switch (type) {
+		case ServiceHelper.HOTTEST_ITEMS:
+			orderBy = C.item.HOTTEST_ORDER;
+			break;
+		default:
+			break;
+		}
+		return new CursorLoader(getActivity(), uri, null, null, null, orderBy);
 	}
 
 	@Override
