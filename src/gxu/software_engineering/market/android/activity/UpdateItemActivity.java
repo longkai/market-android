@@ -83,6 +83,7 @@ public class UpdateItemActivity extends SherlockFragmentActivity implements Load
 	private Long id;
 	private Long cid;
 	private boolean closed;
+	private boolean deal;
 	private CategoriesAdapter mAdapter;
 	private Spinner spinner;
 	private Cursor cursor;
@@ -124,6 +125,7 @@ public class UpdateItemActivity extends SherlockFragmentActivity implements Load
 		extra.setText(_.equals("null") ? "" : _);
 		this.cid = cursor.getLong(cursor.getColumnIndex(C.item.CID));
 		this.closed = cursor.getString(cursor.getColumnIndex(C.item.CLOSED)).equalsIgnoreCase("true");
+		this.deal = cursor.getString(cursor.getColumnIndex(C.item.DEAL)).equalsIgnoreCase("true");
 		Log.i("cid!!", cid + "");
 		getSupportActionBar().setTitle(R.string.edit);
 	}
@@ -197,6 +199,18 @@ public class UpdateItemActivity extends SherlockFragmentActivity implements Load
 				Toast.makeText(this, R.string.publish_fail, Toast.LENGTH_SHORT).show();
 			}
 			break;
+		case R.id.deal:
+			if (this.deal) {
+				Toast.makeText(this, R.string.has_dealt, Toast.LENGTH_SHORT).show();
+				return true;
+			}
+			this.updateType = DEAL;
+			try {
+				values = new PutToCloud().execute(uid+"").get();
+			} catch (Exception e) {
+				Toast.makeText(this, R.string.publish_fail, Toast.LENGTH_SHORT).show();
+			}
+			break;
 		default:
 			break;
 		}
@@ -254,6 +268,11 @@ public class UpdateItemActivity extends SherlockFragmentActivity implements Load
 					httpUri += String.format("/items/%d/open", UpdateItemActivity.this.id);
 					nameValuePairs.add(new BasicNameValuePair(C.UID, params[0]));
 					break;
+				case DEAL:
+					httpUri += "/records/add";
+					nameValuePairs.add(new BasicNameValuePair(C.UID, params[0]));
+					nameValuePairs.add(new BasicNameValuePair("item_id", UpdateItemActivity.this.id+""));
+					break;
 				default:
 					httpUri = C.DOMAIN + String.format("/items/%d/modify", UpdateItemActivity.this.id);
 					nameValuePairs.add(new BasicNameValuePair(C.UID, params[0]));
@@ -267,8 +286,13 @@ public class UpdateItemActivity extends SherlockFragmentActivity implements Load
 		        Log.i("http query string!!!", nameValuePairs.toString());
 		        JSONObject result = null;
 				try {
-					result = RESTMethod.put(httpUri, new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
-					Log.i("post result", result.toString());
+					UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8);
+					if (updateType == DEAL) {
+						result = RESTMethod.post(httpUri, entity);
+					} else {
+						result = RESTMethod.put(httpUri, entity);
+					}
+					Log.i("update result", result.toString());
 				} catch (UnsupportedEncodingException e) {
 					Log.wtf("wtf in http post!!!", e);
 					return null;
@@ -276,7 +300,11 @@ public class UpdateItemActivity extends SherlockFragmentActivity implements Load
 				
 				try {
 					if (result.getInt(C.STATUS) == C.OK) {
-						item = Processor.toItem(result.getJSONObject(C.ITEM));
+						if (updateType == DEAL) {
+							item = Processor.toItem(result.getJSONObject(C.RECORD).getJSONObject(C.ITEM));
+						} else {
+							item = Processor.toItem(result.getJSONObject(C.ITEM));
+						}
 					}
 				} catch (JSONException e) {
 					Log.wtf("wtf in resolving json!!!", e);

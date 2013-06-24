@@ -27,6 +27,8 @@
     
     <string name="edit">修改物品信息</string>
     
+    <string name="has_dealt">对不起，此物品已经交易过了！</string>
+    
     <string-array name="arrays">
         <item>类别1</item>
         <item>类别2</item>
