@@ -20,15 +20,18 @@
         android:theme="@style/AppTheme"
         android:name="gxu.software_engineering.market.android.MarketApp">
         <activity
-            android:name="gxu.software_engineering.market.android.MainActivity"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="adjustResize">
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:name="gxu.software_engineering.market.android.activity.HelloActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="gxu.software_engineering.market.android.MainActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name="gxu.software_engineering.market.android.activity.ItemsActivity" />
         <activity android:name="gxu.software_engineering.market.android.activity.ItemActivity" />
         <activity android:name="gxu.software_engineering.market.android.activity.UserServiceActivity" />
