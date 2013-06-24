@@ -267,10 +267,10 @@ public class UpdateItemActivity extends SherlockFragmentActivity implements Load
 	}
 	
 	private String[] resolveData() {
-		name = (EditText) findViewById(R.id.name);
-		price = (EditText) findViewById(R.id.price);
-		desc = (EditText) findViewById(R.id.description);
-		extra = (EditText) findViewById(R.id.extra);
+//		name = (EditText) findViewById(R.id.name);
+//		price = (EditText) findViewById(R.id.price);
+//		desc = (EditText) findViewById(R.id.description);
+//		extra = (EditText) findViewById(R.id.extra);
 		
 		String _name = this.name.getEditableText().toString();
 		String _price = this.price.getEditableText().toString();

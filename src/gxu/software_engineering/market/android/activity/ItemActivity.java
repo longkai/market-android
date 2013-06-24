@@ -166,7 +166,7 @@ public class ItemActivity extends SherlockFragmentActivity implements OnClickLis
 				Toast.makeText(this, R.string.contact_not_found, Toast.LENGTH_SHORT).show();
 			} else {
 				Intent sms = new Intent(Intent.ACTION_SENDTO);
-				Uri data = Uri.parse("tel:" + _c.getString(0));
+				Uri data = Uri.parse("smsto:" + _c.getString(0));
 				sms.setData(data);
 				startActivity(sms);
 			}
