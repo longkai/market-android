@@ -22,6 +22,7 @@
  */
 package gxu.software_engineering.market.android.activity;
 
+import gxu.software_engineering.market.android.MarketApp;
 import gxu.software_engineering.market.android.R;
 import gxu.software_engineering.market.android.ui.ItemFragment;
 import gxu.software_engineering.market.android.ui.UserInfoBoxFragment;
@@ -59,12 +60,15 @@ public class ItemActivity extends SherlockFragmentActivity implements OnClickLis
 	private String cname;
 	
 	private Cursor c;
+	private MarketApp app;
 	
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 //		setContentView(cn.longkai.android.R.layout.fragment_container);
 		setContentView(R.layout.item);
+		
+		app = MarketApp.marketApp();
 		
 		c = getContentResolver()
 			.query(Uri.parse(C.BASE_URI + C.ITEMS + "/" + getIntent().getLongExtra(C.ID, -1)), null, null, null, null);
@@ -125,7 +129,11 @@ public class ItemActivity extends SherlockFragmentActivity implements OnClickLis
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.item_edit, menu);
+		if (this.uid == app.getPrefs().getLong(C.UID, -1)) {
+			getSupportMenuInflater().inflate(R.menu.item_edit, menu);
+		} else {
+			getSupportMenuInflater().inflate(R.menu.contact_seller, menu);
+		}
 		return true;
 	}
 
@@ -136,7 +144,32 @@ public class ItemActivity extends SherlockFragmentActivity implements OnClickLis
 			Intent intent = new Intent(this, UpdateItemActivity.class);
 			startActivity(intent);
 			break;
-
+		case R.id.call_seller:
+			Cursor c = getContentResolver()
+					.query(Uri.parse(C.BASE_URI + C.USERS + "/" + this.uid),
+							new String[]{C.user.CONTACT}, null, null, null);
+			if (!c.moveToNext()) {
+				Toast.makeText(this, R.string.contact_not_found, Toast.LENGTH_SHORT).show();
+			} else {
+				Intent call = new Intent(Intent.ACTION_CALL);
+				Uri data = Uri.parse("tel:" + c.getString(0));
+				call.setData(data);
+				startActivity(call);
+			}
+			break;
+		case R.id.sms_seller:
+			Cursor _c = getContentResolver()
+			.query(Uri.parse(C.BASE_URI + C.USERS + "/" + this.uid),
+					new String[]{C.user.CONTACT}, null, null, null);
+			if (!_c.moveToNext()) {
+				Toast.makeText(this, R.string.contact_not_found, Toast.LENGTH_SHORT).show();
+			} else {
+				Intent sms = new Intent(Intent.ACTION_SENDTO);
+				Uri data = Uri.parse("tel:" + _c.getString(0));
+				sms.setData(data);
+				startActivity(sms);
+			}
+			break;
 		default:
 			break;
 		}

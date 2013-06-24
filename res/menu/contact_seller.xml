@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item
+        android:id="@+id/sms_seller"
+        android:icon="@drawable/social_send_now"
+        android:title="@string/sms_seller"
+        android:showAsAction="always" />
+    
+    <item
+        android:id="@+id/call_seller"
+        android:icon="@drawable/device_access_call"
+        android:title="@string/call_seller"
+        android:showAsAction="always" />
+    
+
+</menu>

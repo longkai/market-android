@@ -62,4 +62,8 @@
 	<string name="publish_ok">发表成功！</string>
 	<string name="register_fail">注册失败！</string>
 	<string name="register_ok">注册成功！</string>
+	<string name="call_seller">联系卖家！</string>
+	<string name="sms_seller">联系卖家！</string>
+	
+	<string name="contact_not_found">对不起，没有找到该用户的联系方式！</string>
 </resources>
