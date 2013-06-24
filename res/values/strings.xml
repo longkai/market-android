@@ -21,6 +21,10 @@
     <string name="submit">确认提交</string>
     <string name="cancle">放弃编辑</string>
     
+    <string name="close_item">关闭物品交易</string>
+    <string name="open_item">打开物品交易</string>
+    <string name="deal">物品交易成功</string>
+    
     <string name="edit">修改物品信息</string>
     
     <string-array name="arrays">

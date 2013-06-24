@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+	<item
+        android:id="@+id/done"
+        android:icon="@drawable/navigation_accept"
+        android:showAsAction="always"
+        android:title="@string/submit" />
+
+    <item
+        android:id="@+id/discard"
+        android:icon="@drawable/content_discard"
+        android:showAsAction="always"
+        android:title="@string/cancle" />
+    
+    <item
+        android:id="@+id/close_item"
+        android:showAsAction="never"
+        android:icon="@drawable/navigation_cancel"
+        android:title="@string/cancle" />
+    
+    <item
+        android:id="@+id/deal"
+        android:showAsAction="never"
+        android:icon="@drawable/navigation_cancel"
+        android:title="@string/deal" />
+    
+</menu>

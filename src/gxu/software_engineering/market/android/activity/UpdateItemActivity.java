@@ -74,8 +74,15 @@ import com.actionbarsherlock.view.MenuItem;
  */
 public class UpdateItemActivity extends SherlockFragmentActivity implements LoaderCallbacks<Cursor> {
 
+	private static final int CLOSE = 1;
+	private static final int OPEN = 2;
+	private static final int DEAL = 3;
+	
+	private int updateType;
+	
 	private Long id;
 	private Long cid;
+	private boolean closed;
 	private CategoriesAdapter mAdapter;
 	private Spinner spinner;
 	private Cursor cursor;
@@ -116,13 +123,22 @@ public class UpdateItemActivity extends SherlockFragmentActivity implements Load
 		String _ = cursor.getString(cursor.getColumnIndex(C.item.EXTRA));
 		extra.setText(_.equals("null") ? "" : _);
 		this.cid = cursor.getLong(cursor.getColumnIndex(C.item.CID));
+		this.closed = cursor.getString(cursor.getColumnIndex(C.item.CLOSED)).equalsIgnoreCase("true");
 		Log.i("cid!!", cid + "");
 		getSupportActionBar().setTitle(R.string.edit);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.new_item, menu);
+		getSupportMenuInflater().inflate(R.menu.update_menu, menu);
+		MenuItem item = menu.findItem(R.id.close_item);
+		if (!this.closed) {
+			item.setTitle(R.string.close_item);
+			item.setIcon(R.drawable.navigation_cancel);
+		} else {
+			item.setTitle(R.string.open_item);
+			item.setIcon(R.drawable.content_undo);
+		}
 		return true;
 	}
 
@@ -155,31 +171,43 @@ public class UpdateItemActivity extends SherlockFragmentActivity implements Load
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		long uid = MarketApp.marketApp().getPrefs().getLong(C.UID, -1);
+		ContentValues values = null;
 		switch (item.getItemId()) {
 		case R.id.done:
 //			Toast.makeText(this, R.string.submit, Toast.LENGTH_SHORT).show();
 			String[] data = resolveData();
-			ContentValues values = null;
 			try {
-				values = new PutToCloud().execute(cid+"", uid+"", data[0], data[1], data[2], data[3]).get();
+				values = new PutToCloud().execute(uid+"", cid+"", data[0], data[1], data[2], data[3]).get();
 			} catch (Exception e) {
-				Toast.makeText(this, R.string.publish_fail, Toast.LENGTH_SHORT).show();
-			}
-			if (values != null) {
-				Toast.makeText(this, R.string.publish_ok, Toast.LENGTH_SHORT).show();
-				getContentResolver().insert(Uri.parse(C.BASE_URI + C.ITEMS), values);
-				Intent i = new Intent(this, ItemActivity.class);
-				i.putExtra(C.ID, this.id);
-				startActivity(i);
-			} else {
 				Toast.makeText(this, R.string.publish_fail, Toast.LENGTH_SHORT).show();
 			}
 			break;
 		case R.id.discard:
 			finish();
 			break;
+		case R.id.close_item:
+			if (this.closed) {
+				this.updateType = OPEN;
+			} else {
+				this.updateType = CLOSE;
+			}
+			try {
+				values = new PutToCloud().execute(uid+"").get();
+			} catch (Exception e) {
+				Toast.makeText(this, R.string.publish_fail, Toast.LENGTH_SHORT).show();
+			}
+			break;
 		default:
 			break;
+		}
+		if (values != null) {
+			Toast.makeText(this, R.string.publish_ok, Toast.LENGTH_SHORT).show();
+			getContentResolver().insert(Uri.parse(C.BASE_URI + C.ITEMS), values);
+			Intent i = new Intent(this, ItemActivity.class);
+			i.putExtra(C.ID, this.id);
+			startActivity(i);
+		} else {
+			Toast.makeText(this, R.string.publish_fail, Toast.LENGTH_SHORT).show();
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -215,14 +243,27 @@ public class UpdateItemActivity extends SherlockFragmentActivity implements Load
 		protected ContentValues doInBackground(String... params) {
 			ContentValues item = null;
 			if (connected) {
-				String httpUri = C.DOMAIN + String.format("/items/%d/modify", UpdateItemActivity.this.id);
+				String httpUri = C.DOMAIN;
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		        nameValuePairs.add(new BasicNameValuePair(C.CID, params[0]));
-		        nameValuePairs.add(new BasicNameValuePair(C.UID, params[1]));
-		        nameValuePairs.add(new BasicNameValuePair(C.item.NAME, params[2]));
-		        nameValuePairs.add(new BasicNameValuePair(C.item.PRICE, params[3]));
-		        nameValuePairs.add(new BasicNameValuePair(C.item.DESCRIPTION, params[4]));
-		        nameValuePairs.add(new BasicNameValuePair(C.item.PRICE, params[5]));
+				switch (UpdateItemActivity.this.updateType) {
+				case CLOSE:
+					httpUri += String.format("/items/%d/close", UpdateItemActivity.this.id);
+					nameValuePairs.add(new BasicNameValuePair(C.UID, params[0]));
+					break;
+				case OPEN:
+					httpUri += String.format("/items/%d/open", UpdateItemActivity.this.id);
+					nameValuePairs.add(new BasicNameValuePair(C.UID, params[0]));
+					break;
+				default:
+					httpUri = C.DOMAIN + String.format("/items/%d/modify", UpdateItemActivity.this.id);
+					nameValuePairs.add(new BasicNameValuePair(C.UID, params[0]));
+					nameValuePairs.add(new BasicNameValuePair(C.CID, params[1]));
+					nameValuePairs.add(new BasicNameValuePair(C.item.NAME, params[2]));
+					nameValuePairs.add(new BasicNameValuePair(C.item.PRICE, params[3]));
+					nameValuePairs.add(new BasicNameValuePair(C.item.DESCRIPTION, params[4]));
+					nameValuePairs.add(new BasicNameValuePair(C.item.PRICE, params[5]));
+					break;
+				}
 		        Log.i("http query string!!!", nameValuePairs.toString());
 		        JSONObject result = null;
 				try {
