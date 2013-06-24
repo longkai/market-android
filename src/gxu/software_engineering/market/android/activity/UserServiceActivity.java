@@ -28,6 +28,8 @@ import gxu.software_engineering.market.android.ui.EditUserInfoBoxFragment;
 import gxu.software_engineering.market.android.ui.UserServicePagerAdapter;
 import gxu.software_engineering.market.android.util.C;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -45,6 +47,8 @@ import com.actionbarsherlock.view.MenuItem;
  * @since  2013-6-22
  */
 public class UserServiceActivity extends SherlockFragmentActivity {
+	
+	private MarketApp app;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -58,6 +62,8 @@ public class UserServiceActivity extends SherlockFragmentActivity {
 		
 		getSupportActionBar().setTitle(
 				MarketApp.marketApp().getPrefs().getString(C.user.NICK, getResources().getString(R.string.app_name)));
+		getSupportActionBar().setSubtitle(R.string.hello_world);
+		app = MarketApp.marketApp();
 	}
 	
 	@Override
@@ -86,6 +92,15 @@ public class UserServiceActivity extends SherlockFragmentActivity {
 			pwdArgs.putInt(C.USER_INFO_MODIFY_TYPE, C.PASSWORD);
 			pwd.setArguments(pwdArgs);
 			pwd.show(getSupportFragmentManager(), "password");
+			break;
+		case R.id.logout:
+			SharedPreferences prefs = app.getPrefs();
+			long mills = prefs.getLong(C.LAST_SYNC, 0L);
+			Editor edit = prefs.edit();
+			edit.clear();
+			edit.putLong(C.LAST_SYNC, mills);
+			edit.commit();
+			finish();
 			break;
 		default:
 			break;

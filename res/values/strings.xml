@@ -77,6 +77,8 @@
 	<string name="optr_fail">操作失败，请稍后再试！</string>
 	<string name="optr_ok">操作成功！</string>
 	
+	<string name="logout">登出</string>
+	
 	<string name="sync_error">同步出错！\t %1$s</string>
 	<string name="sync_nice">同步成功！本次同步时间\t %1$s</string>
 	<string name="syncing">同步中。。。上一次同步时间\t %1$s</string>

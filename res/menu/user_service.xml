@@ -21,6 +21,10 @@
 		        android:id="@+id/edit_ccontact"
 		        android:title="@string/contact"
 		        android:icon="@drawable/hardware_phone" />
+		    <item
+		        android:id="@+id/logout"
+		        android:icon="@drawable/navigation_cancel"
+		        android:title="@string/logout" />
 		</menu>    
 	</item>
     
