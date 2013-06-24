@@ -23,10 +23,12 @@
 package gxu.software_engineering.market.android;
 
 import gxu.software_engineering.market.android.activity.UserServiceActivity;
+import gxu.software_engineering.market.android.service.SyncService;
 import gxu.software_engineering.market.android.ui.CategoriesFragment;
 import gxu.software_engineering.market.android.ui.LoginBoxFragment;
 import gxu.software_engineering.market.android.ui.PagerAdapter;
 import gxu.software_engineering.market.android.ui.RegisterBoxFragment;
+import gxu.software_engineering.market.android.util.C;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,6 +37,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.format.DateUtils;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -50,6 +54,8 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
  */
 public class MainActivity extends SlidingFragmentActivity {
 
+	private MarketApp app;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,6 +112,8 @@ public class MainActivity extends SlidingFragmentActivity {
 		pager.setCurrentItem(1);
 		getSupportActionBar().setTitle(R.string.app_name);
 		getSupportActionBar().setSubtitle(R.string.hello_world);
+		
+		app = MarketApp.marketApp();
 	}
 
 	@Override
@@ -121,7 +129,6 @@ public class MainActivity extends SlidingFragmentActivity {
 			toggle();
 			break;
 		case R.id.login:
-			MarketApp app = MarketApp.marketApp();
 			if (app.hasLogedIn()) {
 				Intent intent = new Intent(this, UserServiceActivity.class);
 				startActivity(intent);
@@ -133,6 +140,12 @@ public class MainActivity extends SlidingFragmentActivity {
 		case R.id.register:
 			RegisterBoxFragment register = new RegisterBoxFragment();
 			register.show(getSupportFragmentManager(), "register");
+			break;
+		case R.id.sync:
+			long last = app.getPrefs().getLong(C.LAST_SYNC, 0);
+			Toast.makeText(this, getString(R.string.syncing, DateUtils.getRelativeTimeSpanString(last)), Toast.LENGTH_SHORT).show();
+			Intent sync = new Intent(this, SyncService.class);
+			startService(sync);
 			break;
 		default:
 			break;

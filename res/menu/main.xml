@@ -17,9 +17,10 @@
     </item>
     
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/sync"
         android:orderInCategory="100"
+        android:icon="@drawable/navigation_refresh"
         android:showAsAction="never"
-        android:title="@string/action_settings" />
+        android:title="@string/sync" />
 
 </menu>
