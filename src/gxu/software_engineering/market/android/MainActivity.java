@@ -104,6 +104,8 @@ public class MainActivity extends SlidingFragmentActivity {
 		});
 		
 		pager.setCurrentItem(1);
+		getSupportActionBar().setTitle(R.string.app_name);
+		getSupportActionBar().setSubtitle(R.string.hello_world);
 	}
 
 	@Override
