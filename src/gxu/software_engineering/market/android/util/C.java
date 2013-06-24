@@ -127,5 +127,7 @@ public final class C {
 		public static final String HOTTEST_ORDER = CLICK_TIMES + " desc";
 		public static final String LATEST_ORDER = ADDED_TIME + " desc";
 	}
+	
+	public static final String LAST_SYNC = "last_sync";
 
 }

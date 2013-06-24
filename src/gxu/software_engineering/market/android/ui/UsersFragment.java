@@ -76,10 +76,10 @@ public class UsersFragment extends ListFragment implements LoaderCallbacks<Curso
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		Uri data = Uri.parse(C.BASE_URI + C.USERS);
-		Intent intent = new Intent(getActivity(), FetchService.class);
-		intent.setData(data);
-		intent.putExtra(C.TARGET_ENTITY, ServiceHelper.LASTEST_USERS);
-		getActivity().startService(intent);
+//		Intent intent = new Intent(getActivity(), FetchService.class);
+//		intent.setData(data);
+//		intent.putExtra(C.TARGET_ENTITY, ServiceHelper.LASTEST_USERS);
+//		getActivity().startService(intent);
 		return new CursorLoader(getActivity(), data, null, null, null, null);
 	}
 

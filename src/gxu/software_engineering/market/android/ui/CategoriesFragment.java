@@ -79,10 +79,10 @@ public class CategoriesFragment extends ListFragment implements LoaderCallbacks<
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		Uri data = Uri.parse(C.BASE_URI + C.CATEGORIES);
 		
-		Intent intent = new Intent(getActivity(), FetchService.class);
-		intent.putExtra(C.TARGET_ENTITY, ServiceHelper.CATEGORIES);
-		intent.setData(data);
-		getActivity().startService(intent);
+//		Intent intent = new Intent(getActivity(), FetchService.class);
+//		intent.putExtra(C.TARGET_ENTITY, ServiceHelper.CATEGORIES);
+//		intent.setData(data);
+//		getActivity().startService(intent);
 		
 		return new CursorLoader(getActivity(), data, null, null, null, C.ASC_SORT);
 	}

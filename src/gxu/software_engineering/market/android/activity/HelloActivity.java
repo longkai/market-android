@@ -24,6 +24,7 @@ package gxu.software_engineering.market.android.activity;
 
 import gxu.software_engineering.market.android.MainActivity;
 import gxu.software_engineering.market.android.R;
+import gxu.software_engineering.market.android.service.SyncService;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,10 +38,14 @@ import android.os.Handler;
  */
 public class HelloActivity extends Activity {
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.hello);
+		
+		Intent sync = new Intent(this, SyncService.class);
+		startService(sync);
 		
 		new Handler().postDelayed(new Runnable() {
 			@Override
@@ -49,5 +54,5 @@ public class HelloActivity extends Activity {
 			}
 		}, getResources().getInteger(R.integer.splash_time));
 	}
-
+	
 }
