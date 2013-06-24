@@ -121,7 +121,7 @@ public class MarketProvider extends ContentProvider {
 			break;
 		case ITEM:
 			selection = " _id = " + uri.getLastPathSegment();
-			cursor = db.query(C.ITEM, projection, selection, selectionArgs, null, null, null);
+			cursor = db.query(C.ITEMS, projection, selection, selectionArgs, null, null, null);
 			break;
 		default:
 			throw new IllegalArgumentException("404 for the URI[" + uri + "]");
@@ -238,6 +238,7 @@ public class MarketProvider extends ContentProvider {
 				.append(C.item.PRICE).append(" float, ")
 				.append(C.item.SELLER).append(" varchar(20), ")
 				.append(C.item.SELLER_ID).append(" integer, ")
+				.append(C.item.CID).append(" integer, ")
 				.append(C.item.EXTRA).append(" varchar(255))");
 			db.execSQL(sql.toString());
 		}

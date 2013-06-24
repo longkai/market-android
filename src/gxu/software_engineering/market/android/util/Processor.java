@@ -93,6 +93,7 @@ public class Processor {
 		values.put(C.item.PRICE, json.getDouble(C.item.PRICE));
 		values.put(C.item.SELLER, seller.getString(C.user.NICK));
 		values.put(C.item.SELLER_ID, seller.getLong(C.ID));
+		values.put(C.item.CID, category.getLong(C.ID));
 		return values;
 	}
 	

@@ -67,6 +67,7 @@ public class ItemsFragment extends ListFragment implements LoaderCallbacks<Curso
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		Intent intent = new Intent(getActivity(), ItemActivity.class);
+		intent.putExtra(C.ID, id);
 		getActivity().startActivity(intent);
 	}
 

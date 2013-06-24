@@ -2,8 +2,154 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    
-	    
+    android:orientation="vertical"
+    android:layout_marginTop="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/category"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/metro_button4"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="2dp"
+                android:textColor="@color/white"
+                android:text="@string/app_name" />
+
+            <Button
+                android:id="@+id/click_times"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/metro_button3"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="2dp"
+                android:textColor="@color/white"
+                android:text="@string/app_name" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="25sp"
+            android:background="@drawable/metro_button5"
+            android:textColor="@color/white"
+            android:layout_margin="5dp"
+            android:text="@string/app_name" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/seller"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/metro_button"
+                android:textColor="#fff"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/app_name" />
+
+            <Button
+                android:id="@+id/price"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                android:background="@drawable/metro_button2"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/white"
+                android:text="@string/app_name" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/publish_at"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/metro_button6"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/white"
+                android:text="@string/app_name" />
+
+            <Button
+                android:id="@+id/extra"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:background="@drawable/metro_button8"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/white"
+                android:text="@string/app_name" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/desc"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:textSize="13sp"
+                android:background="@drawable/metro_button9"
+                android:text="@string/app_name" />
+
+            <Button
+                android:id="@+id/last_modified_time"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/metro_button7"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/white"
+                android:text="@string/app_name" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

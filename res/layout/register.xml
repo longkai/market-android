@@ -11,6 +11,7 @@
         android:hint="@string/account_hint"
         android:textSize="18sp"
         android:maxLength="18"
+        android:textColor="@color/white"
         android:inputType="text" />
     
     <EditText
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/password_hint"
         android:textSize="18sp"
+        android:textColor="@color/white"
         android:inputType="textPassword" />
     
     <EditText
@@ -26,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/confirmed_password"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:inputType="textPassword" />
     
@@ -33,6 +36,7 @@
         android:id="@+id/nick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:hint="@string/nick"
         android:textSize="18sp"
         android:maxLength="7"
@@ -44,8 +48,9 @@
         android:layout_height="wrap_content"
         android:hint="@string/contact"
         android:textSize="18sp"
+        android:textColor="@color/white"
         android:maxLength="11"
-        android:inputType="text" />
+        android:inputType="number" />
     
     <EditText
         android:id="@+id/true_name"
@@ -53,6 +58,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/true_name"
         android:textSize="18sp"
+        android:textColor="@color/white"
         android:maxLength="11"
         android:inputType="text" />
 

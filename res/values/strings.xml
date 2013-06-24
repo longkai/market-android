@@ -53,4 +53,13 @@
 	<string name="login_ok">登陆成功！</string>
 	
 	<string name="publish_at">发布于\t</string>
+	
+	<string name="item_not_found">对不起，您所要找的物品不存在！</string>
+	<string name="no_extra">该物品没有额外信息哦^_^</string>
+	
+	<string name="publishing">正在努力提交中。。。</string>
+	<string name="publish_fail">发表失败！</string>
+	<string name="publish_ok">发表成功！</string>
+	<string name="register_fail">注册失败！</string>
+	<string name="register_ok">注册成功！</string>
 </resources>

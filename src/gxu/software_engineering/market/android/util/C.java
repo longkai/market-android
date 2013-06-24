@@ -106,7 +106,7 @@ public final class C {
 		public static final String REAL_NAME = "real_name";
 		
 //		not json!
-		public static final String PASSWORD = "passowrd";
+		public static final String PASSWORD = "password";
 	}
 	
 	public static final class item {
@@ -122,6 +122,7 @@ public final class C {
 		public static final String CLICK_TIMES = "click_times";
 		public static final String CLOSED = "closed";
 		public static final String DESCRIPTION = "description";
+		public static final String CID = "cid";
 		
 		public static final String HOTTEST_ORDER = CLICK_TIMES + " desc";
 		public static final String LATEST_ORDER = ADDED_TIME + " desc";

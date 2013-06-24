@@ -6,7 +6,7 @@
     android:padding="5dp">
     
     <EditText
-        android:id="@+id/title"
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/title"
@@ -14,26 +14,27 @@
         android:maxLength="18"
         android:textSize="20sp" />
     
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
         <Spinner
 	        android:id="@+id/categories"
-	        android:layout_width="0dp"
+	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
 	        android:prompt="@string/category"
-	        android:layout_weight="1"
 	        android:entries="@array/arrays" />
         <EditText
             android:id="@+id/price"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_toRightOf="@id/categories"
+            android:layout_alignBottom="@id/categories"
+            android:layout_alignParentRight="true"
             android:singleLine="true"
             android:hint="@string/price"
             android:inputType="number" />
-    </LinearLayout>
+    </RelativeLayout>
     
     <EditText
         android:id="@+id/description"
