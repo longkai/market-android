@@ -22,15 +22,37 @@
  */
 package gxu.software_engineering.market.android.ui;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONObject;
+
+import cn.longkai.android.util.NetworkUtils;
+import cn.longkai.android.util.RESTMethod;
+import gxu.software_engineering.market.android.MarketApp;
 import gxu.software_engineering.market.android.R;
 import gxu.software_engineering.market.android.util.C;
+import gxu.software_engineering.market.android.util.Processor;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 /**
@@ -40,13 +62,18 @@ import android.widget.Toast;
  * @email  im.longkai@gmail.com
  * @since  2013-6-23
  */
-public class EditUserInfoBoxFragment extends DialogFragment {
+public class EditUserInfoBoxFragment extends DialogFragment implements DialogInterface.OnClickListener {
 
+	private ProgressDialog progressDialog;
+	private View v;
+	private int type;
+	private MarketApp app;
+	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Bundle args = getArguments();
-		View v = null;
-		int type = args.getInt(C.USER_INFO_MODIFY_TYPE);
+		type = args.getInt(C.USER_INFO_MODIFY_TYPE);
+		app = MarketApp.marketApp();
 		switch (type) {
 		case C.CONTACT:
 			v = getActivity().getLayoutInflater().inflate(R.layout.edit_contact, null);
@@ -61,13 +88,111 @@ public class EditUserInfoBoxFragment extends DialogFragment {
 			.setTitle(R.string.edit_user_info)
 			.setIcon(type == C.CONTACT ? R.drawable.hardware_phone : R.drawable.device_access_secure)
 			.setNegativeButton(R.string.no, null)
-			.setPositiveButton(R.string.submit, new OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Toast.makeText(getActivity(), R.string.app_name, Toast.LENGTH_SHORT).show();
+			.setPositiveButton(R.string.submit, this)
+			.create();
+	}
+	
+	private class UpdateUserInfo extends AsyncTask<String, Void, ContentValues> {
+
+		private boolean connected;
+		
+		@Override
+		protected ContentValues doInBackground(String... params) {
+			ContentValues user = null;
+			if (connected) {
+				long uid = app.getPrefs().getLong(C.UID, -1);
+				String httpUri = C.DOMAIN + String.format("/users/%d/modify", uid);
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+				if (type == C.CONTACT) {
+					nameValuePairs.add(new BasicNameValuePair("type", "0"));
+				} else {
+					nameValuePairs.add(new BasicNameValuePair("type", "1"));
 				}
-			}).create();
+				nameValuePairs.add(new BasicNameValuePair("value", params[0]));
+				
+				try {
+					JSONObject result = RESTMethod.put(httpUri, new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
+					Log.i("update user result", result.toString());
+					if (result.getInt(C.STATUS) == C.OK) {
+						user = Processor.toUser(result.getJSONObject(C.USER));
+					}
+				} catch (Exception e) {
+					Log.wtf("update user error!", e);
+					user = null;
+				}
+			}
+			return user;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			if (NetworkUtils.connected(getActivity())) {
+				connected = true;
+				progressDialog = new ProgressDialog(getActivity());
+				progressDialog.setTitle(R.string.publishing);
+				progressDialog.show();
+			}
+		}
+
+		@Override
+		protected void onPostExecute(ContentValues result) {
+			if (!connected) {
+				Toast.makeText(getActivity(), R.string.network_down, Toast.LENGTH_SHORT).show();
+				return;
+			}
+			progressDialog.dismiss();
+		}
+		
+	}
+	
+	private String resolveValue(View v) {
+		EditText p = (EditText) v.findViewById(R.id.password);
+		String pwd = p.getEditableText().toString();
+		String _pwd = app.getPrefs().getString(C.user.PASSWORD, null);
+		Log.i("pwd!!!", _pwd);
+		if (!_pwd.equals(pwd)) {
+			return null;
+		}
+		if (type == C.CONTACT) {
+			EditText e1 = (EditText) v.findViewById(R.id.contact);
+			String contact = e1.getEditableText().toString();
+			return contact;
+		} else {
+			EditText p1 = (EditText) v.findViewById(R.id.new_password);
+			String passwrod = p1.getEditableText().toString();
+			EditText p2 = (EditText) v.findViewById(R.id.confirmed_password);
+			String passwrod2 = p2.getEditableText().toString();
+			if (!passwrod.trim().equals(passwrod2)) {
+				Toast.makeText(getActivity(), R.string.password_not_match, Toast.LENGTH_SHORT).show();
+				return null;
+			}
+			return passwrod;
+		}
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		String value =  resolveValue(v);
+		if (value == null) {
+			Toast.makeText(getActivity(), R.string.password_wrong, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		ContentValues user = null;
+		try {
+			 user = new UpdateUserInfo().execute(value).get();
+		} catch (Exception e) {
+			Toast.makeText(getActivity(), R.string.optr_fail, Toast.LENGTH_SHORT).show();
+			Log.wtf("wrong with wait the asnytask reslt!!!", e);
+		}
+		if (user == null) {
+			Toast.makeText(getActivity(), R.string.optr_fail, Toast.LENGTH_SHORT).show();
+		} else {
+			getActivity().getContentResolver().insert(Uri.parse(C.BASE_URI + C.USERS), user);
+			if (type == C.PASSWORD) {
+				app.getPrefs().edit().putString(C.user.PASSWORD, value).commit();
+			}
+			Toast.makeText(getActivity(), R.string.optr_ok, Toast.LENGTH_SHORT).show();
+		}
 	}
 
 }

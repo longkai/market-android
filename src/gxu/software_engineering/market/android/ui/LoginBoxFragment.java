@@ -98,6 +98,7 @@ public class LoginBoxFragment extends DialogFragment {
 							}
 							
 							if (uid > 0) {
+								Log.i("login pwd!!!", password);
 								app.setLoginInfo(uid, account, password);
 							}
 							

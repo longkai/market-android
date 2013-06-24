@@ -9,14 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/edit_contact_hint"
+        android:textColor="@color/white"
+        android:textCursorDrawable="@null"
         android:textSize="18sp"
         android:inputType="phone" />
     
     <EditText
-        android:id="@+id/edit_password"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
+        android:textColor="@color/white"
+        android:textCursorDrawable="@null"
         android:hint="@string/edit_password_hint"
         android:inputType="textPassword" />
 
