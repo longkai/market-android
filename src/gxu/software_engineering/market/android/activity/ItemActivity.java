@@ -142,6 +142,7 @@ public class ItemActivity extends SherlockFragmentActivity implements OnClickLis
 		switch (item.getItemId()) {
 		case R.id.edit:
 			Intent intent = new Intent(this, UpdateItemActivity.class);
+			intent.putExtra(C.ID, getIntent().getLongExtra(C.ID, -1));
 			startActivity(intent);
 			break;
 		case R.id.call_seller:

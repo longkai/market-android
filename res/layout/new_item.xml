@@ -22,8 +22,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
-	        android:prompt="@string/category"
-	        android:entries="@array/arrays" />
+	        android:prompt="@string/category" />
         <EditText
             android:id="@+id/price"
             android:layout_width="wrap_content"
