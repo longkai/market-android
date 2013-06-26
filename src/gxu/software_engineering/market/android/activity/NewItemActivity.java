@@ -106,7 +106,8 @@ public class NewItemActivity extends SherlockFragmentActivity implements LoaderC
 
 		getSupportActionBar().setTitle(R.string.new_item);
 		this.mAdapter = new CategoriesAdapter(this);
-//		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setSubtitle(R.string.hello_world);
 	}
 
 	@Override

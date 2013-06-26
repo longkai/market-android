@@ -125,6 +125,8 @@ public class ItemActivity extends SherlockFragmentActivity implements OnClickLis
 		category.setOnClickListener(this);
 		
 		getSupportActionBar().setTitle("查看物品信息");
+		getSupportActionBar().setSubtitle(R.string.hello_world);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	@Override
@@ -140,6 +142,9 @@ public class ItemActivity extends SherlockFragmentActivity implements OnClickLis
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			break;
 		case R.id.edit:
 			Intent intent = new Intent(this, UpdateItemActivity.class);
 			intent.putExtra(C.ID, getIntent().getLongExtra(C.ID, -1));

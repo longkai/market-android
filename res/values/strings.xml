@@ -38,7 +38,7 @@
     
     <string name="close">关闭</string>
     <string name="password">修改密码</string>
-    <string name="contact">修改联系方式</string>
+    <string name="update_contact">修改联系方式</string>
     <string name="items_by_seller">查看他出售的物品</string>
     <string name="edit_user_info">修改用户信息</string>
     <string name="edit_contact_hint">请输入新的联系方式</string>
