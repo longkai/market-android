@@ -66,9 +66,9 @@ public final class C {
 	public static final int		NO			= 0;
 	
 //	public static final String DOMAIN = "http://10.0.2.2";
-//	public static final String DOMAIN = "http://192.168.1.103";
+	public static final String DOMAIN = "http://192.168.1.103";
 //	public static final String DOMAIN = "http://192.168.173.1";
-	public static final String DOMAIN = "http://192.168.3.2";
+//	public static final String DOMAIN = "http://192.168.3.2";
 	
 	public static final String ACCOUNT = "account";
 	public static final String PWD = "pwd";

@@ -23,7 +23,6 @@
 package gxu.software_engineering.market.android;
 
 import gxu.software_engineering.market.android.util.C;
-import cn.longkai.android.util.HttpClientProvider;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -53,7 +52,6 @@ public class MarketApp extends Application implements OnSharedPreferenceChangeLi
 	public void onCreate() {
 		super.onCreate();
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-		HttpClientProvider.init(this);
 		app = this;
 	}
 

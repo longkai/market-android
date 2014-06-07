@@ -22,11 +22,14 @@
  */
 package gxu.software_engineering.market.android.ui;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import gxu.software_engineering.market.android.util.NetworkUtils;
+import gxu.software_engineering.market.android.util.RESTMethod;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
@@ -34,8 +37,6 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cn.longkai.android.util.NetworkUtils;
-import cn.longkai.android.util.RESTMethod;
 import gxu.software_engineering.market.android.R;
 import gxu.software_engineering.market.android.util.C;
 import gxu.software_engineering.market.android.util.Processor;
@@ -140,6 +141,10 @@ public class RegisterBoxFragment extends DialogFragment {
 					}
 				} catch (UnsupportedEncodingException e) {
 					Log.wtf("register post error!", e);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 			return values;

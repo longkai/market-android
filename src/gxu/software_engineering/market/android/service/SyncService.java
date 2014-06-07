@@ -22,13 +22,14 @@
  */
 package gxu.software_engineering.market.android.service;
 
+import java.io.IOException;
 import java.util.Calendar;
 
+import gxu.software_engineering.market.android.util.NetworkUtils;
+import gxu.software_engineering.market.android.util.RESTMethod;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cn.longkai.android.util.NetworkUtils;
-import cn.longkai.android.util.RESTMethod;
 
 import gxu.software_engineering.market.android.MarketApp;
 import gxu.software_engineering.market.android.R;
@@ -84,8 +85,15 @@ public class SyncService extends IntentService {
 		String uri = C.DOMAIN
 				+ String.format("/sync?count=%d&last=%s"
 						, C.DEFAULT_LIST_SIZE, lastSyncMills);
-		
-		JSONObject result = RESTMethod.get(uri);
+
+		JSONObject result = null;
+		try {
+			result = RESTMethod.get(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 		boolean nice = false;
 		ContentValues[] categories = null;
 		ContentValues[] users = null;

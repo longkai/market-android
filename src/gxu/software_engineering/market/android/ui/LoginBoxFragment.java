@@ -22,6 +22,7 @@
  */
 package gxu.software_engineering.market.android.ui;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import gxu.software_engineering.market.android.MarketApp;
@@ -29,6 +30,9 @@ import gxu.software_engineering.market.android.R;
 import gxu.software_engineering.market.android.activity.UserServiceActivity;
 import gxu.software_engineering.market.android.util.C;
 
+import gxu.software_engineering.market.android.util.NetworkUtils;
+import gxu.software_engineering.market.android.util.RESTMethod;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
@@ -46,8 +50,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import cn.longkai.android.util.NetworkUtils;
-import cn.longkai.android.util.RESTMethod;
 
 /**
  * 卖家登陆框。
@@ -126,7 +128,14 @@ public class LoginBoxFragment extends DialogFragment {
 			}
 			String uri = C.DOMAIN + String.format("/login?account=%s&password=%s", params[0], params[1]);
 			Log.i("login uri", uri);
-			JSONObject result = RESTMethod.get(uri);
+			JSONObject result = null;
+			try {
+				result = RESTMethod.get(uri);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			Log.i("login result", result.toString());
 			try {
 				if (result.getInt(C.STATUS) == C.OK) {

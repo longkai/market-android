@@ -30,7 +30,8 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.util.Log;
-import cn.longkai.android.util.RESTMethod;
+
+import java.io.IOException;
 
 /**
  * 服务组件工具类。
@@ -91,7 +92,12 @@ public class ServiceHelper {
 	public static void doing(ContentResolver contentResolver, Intent intent) throws JSONException {
 		String httpUri = intent.getStringExtra(C.HTTP_URI);
 		Log.i("http uri", httpUri);
-		JSONObject data = RESTMethod.get(httpUri);
+		JSONObject data = null;
+		try {
+			data = RESTMethod.get(httpUri);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Log.i("json result", data.toString());
 		JSONArray array = null;
 		ContentValues[] items = null;

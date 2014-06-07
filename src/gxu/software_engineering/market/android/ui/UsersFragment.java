@@ -35,6 +35,10 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -54,9 +58,20 @@ public class UsersFragment extends ListFragment implements LoaderCallbacks<Curso
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
+		setHasOptionsMenu(true);
 		mAdapter = new UsersAdapter(getActivity());
 	}
 	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		MenuItem populateItem = menu.add(Menu.NONE, 1, 0, "Populate");
+		MenuItemCompat.setShowAsAction(populateItem, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+		MenuItem clearItem = menu.add(Menu.NONE, 2, 0, "Clear");
+		MenuItemCompat.setShowAsAction(clearItem, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+	}
+
+
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);

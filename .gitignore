@@ -22,3 +22,6 @@ local.properties
 # custom goes here...
 *~
 .settings/
+
+.idea/
+*.iml

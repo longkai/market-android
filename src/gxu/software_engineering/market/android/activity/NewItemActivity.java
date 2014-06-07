@@ -25,12 +25,14 @@ package gxu.software_engineering.market.android.activity;
 import gxu.software_engineering.market.android.MarketApp;
 import gxu.software_engineering.market.android.R;
 import gxu.software_engineering.market.android.util.C;
+import gxu.software_engineering.market.android.util.NetworkUtils;
 import gxu.software_engineering.market.android.util.Processor;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import gxu.software_engineering.market.android.util.RESTMethod;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
@@ -60,8 +62,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import cn.longkai.android.util.NetworkUtils;
-import cn.longkai.android.util.RESTMethod;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -177,11 +177,11 @@ public class NewItemActivity extends SherlockFragmentActivity implements LoaderC
 				try {
 					result = RESTMethod.post(httpUri, new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
 					Log.i("post result", result.toString());
-				} catch (UnsupportedEncodingException e) {
+				} catch (Exception e) {
 					Log.wtf("wtf in http post!!!", e);
 					return null;
 				}
-				
+
 				try {
 					if (result.getInt(C.STATUS) == C.OK) {
 						item = Processor.toItem(result.getJSONObject(C.ITEM));

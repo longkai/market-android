@@ -22,12 +22,11 @@
  */
 package gxu.software_engineering.market.android.service;
 
+import gxu.software_engineering.market.android.util.NetworkUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cn.longkai.android.util.NetworkUtils;
-import cn.longkai.android.util.RESTMethod;
 import gxu.software_engineering.market.android.R;
 import gxu.software_engineering.market.android.provider.MarketProvider;
 import gxu.software_engineering.market.android.util.C;

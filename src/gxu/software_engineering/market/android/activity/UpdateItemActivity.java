@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import gxu.software_engineering.market.android.util.NetworkUtils;
+import gxu.software_engineering.market.android.util.RESTMethod;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
@@ -58,8 +60,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import cn.longkai.android.util.NetworkUtils;
-import cn.longkai.android.util.RESTMethod;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -293,7 +293,7 @@ public class UpdateItemActivity extends SherlockFragmentActivity implements Load
 						result = RESTMethod.put(httpUri, entity);
 					}
 					Log.i("update result", result.toString());
-				} catch (UnsupportedEncodingException e) {
+				} catch (Exception e) {
 					Log.wtf("wtf in http post!!!", e);
 					return null;
 				}

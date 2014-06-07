@@ -27,14 +27,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import gxu.software_engineering.market.android.util.NetworkUtils;
+import gxu.software_engineering.market.android.util.RESTMethod;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
-import cn.longkai.android.util.NetworkUtils;
-import cn.longkai.android.util.RESTMethod;
 import gxu.software_engineering.market.android.MarketApp;
 import gxu.software_engineering.market.android.R;
 import gxu.software_engineering.market.android.util.C;

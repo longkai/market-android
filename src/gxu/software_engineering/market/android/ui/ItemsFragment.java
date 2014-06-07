@@ -118,17 +118,17 @@ public class ItemsFragment extends ListFragment implements LoaderCallbacks<Curso
 //			orderBy = C.item.LATEST_ORDER;
 			break;
 		}
-		return new CursorLoader(getActivity(), uri, null, selection, null, orderBy);
+		return new CursorLoader(getActivity(), uri, null, selection, null, orderBy + " LIMIT 10");
 	}
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
-		mAdapter.swapCursor(arg1);
+		mAdapter.changeCursor(arg1);
 	}
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> arg0) {
-		mAdapter.swapCursor(null);
+		mAdapter.changeCursor(null);
 	}
 	
 }
